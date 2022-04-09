@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Money Saver</string>
+    <string name="msg_need_auth">Es necesario autenticarse</string>
+    <string name="msg_missing_con">No es posible autenticarse sin conexión</string>
+    <string name="msg_ukn_err">Error desconocido al utenticarse, por favor intentelo de nuevo más tarde</string>
 </resources>
