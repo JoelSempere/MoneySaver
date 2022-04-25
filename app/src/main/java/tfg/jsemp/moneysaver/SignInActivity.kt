@@ -6,9 +6,10 @@ import android.os.Bundle
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_sign_in.*
-import tfg.jsemp.moneysaver.utils.ConstantsUtil.constantesLogin.LOGIN_EMAIL
+import tfg.jsemp.moneysaver.utils.ConstantsUtil.ConstantsLogin.LOGIN_EMAIL
 
 class SignInActivity : AppCompatActivity() {
+    lateinit var firebaseAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
@@ -48,7 +49,8 @@ class SignInActivity : AppCompatActivity() {
         btnSignIn.setOnClickListener {
             println("@Joel: Comprobar Boolean - 17/04/22 - " + comprobarCamposLogin())
             if (comprobarCamposLogin()) {
-                FirebaseAuth.getInstance()
+                firebaseAuth = FirebaseAuth.getInstance()
+                firebaseAuth
                     .createUserWithEmailAndPassword(
                         etEmail.text.toString(),
                         etPassword.text.toString()

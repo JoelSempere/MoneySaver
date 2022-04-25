@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "74949683138-02bjv7dvtjtqsjk075fk7vm58mpsnucn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tfg.jsemp.moneysaver",
+            "certificate_hash": "16a6d9d4896413557d885983c1ba5bf9aa51f06f"
+          }
+        },
+        {
           "client_id": "74949683138-kmh37unjkp75vfkgio3g7j13nl8v7lph.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -10,6 +10,8 @@
         android:id="@+id/etEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:ems="10"
         android:hint="@string/fui_email_hint"
         android:inputType="textEmailAddress"
@@ -32,13 +34,13 @@
 
     <Button
         android:id="@+id/btnSignIn"
-        android:layout_width="0dp"
+        android:layout_width="149dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:text="@string/sign_in"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/tvRegistrarse"
-        app:layout_constraintEnd_toEndOf="@+id/btnLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tvRegistrarse"
         app:layout_constraintTop_toTopOf="@+id/tvRegistrarse" />
 
@@ -46,9 +48,12 @@
         android:id="@+id/btnLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
         android:backgroundTint="@color/primary_dark"
+        android:drawableStart="@mipmap/google"
         android:text="@string/login"
-        app:layout_constraintBottom_toTopOf="@+id/tvRegistrarse"
+        app:layout_constraintBottom_toTopOf="@+id/btnGoogle"
         app:layout_constraintEnd_toEndOf="@+id/etPassword"
         app:layout_constraintStart_toStartOf="@+id/etPassword"
         app:layout_constraintTop_toBottomOf="@+id/etPassword" />
@@ -58,12 +63,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/wrn_sign_in"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnSignIn"
-        app:layout_constraintStart_toStartOf="@+id/btnLogin"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnGoogle" />
 
     <ImageView
         android:id="@+id/ivLogo"
@@ -75,6 +83,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/mslogo" />
+        app:srcCompat="@mipmap/mslogo" />
+
+    <Button
+        android:id="@+id/btnGoogle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="@color/white"
+        android:drawableStart="@mipmap/google"
+        android:text="@string/google"
+        android:textColor="@color/primary_text"
+        app:layout_constraintBottom_toTopOf="@+id/btnSignIn"
+        app:layout_constraintEnd_toEndOf="@+id/btnLogin"
+        app:layout_constraintStart_toStartOf="@+id/btnLogin"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

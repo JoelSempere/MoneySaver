@@ -4,16 +4,27 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
-import tfg.jsemp.moneysaver.utils.ConstantsUtil.constantesLogin.LOGIN_EMAIL
+import tfg.jsemp.moneysaver.utils.ConstantsUtil.ConstantsLogin.GOOGLE_SIGN_IN
+import tfg.jsemp.moneysaver.utils.ConstantsUtil.ConstantsLogin.LOGIN_EMAIL
+import java.lang.Exception
 
 
 class LoginActivity : AppCompatActivity() {
-
+    lateinit var googleSignInClient : GoogleSignInClient
+    lateinit var firebaseAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        val gImage = getDrawable(R.mipmap.google) //Unica manera de insertar la imagen en un button basico
+        btnGoogle.setCompoundDrawablesWithIntrinsicBounds(gImage,null,null,null)
         iniciarApp()
     }
 
@@ -25,10 +36,10 @@ class LoginActivity : AppCompatActivity() {
 
 
     //***INICIO DE SESION INTENT***//
-    private fun createLoginIntent() {
+    private fun createLoginIntent(email: String) {
         val signInIntent = Intent(this, MainActivity::class.java)
             .apply {
-                putExtra(LOGIN_EMAIL,etEmail.text)
+                putExtra(LOGIN_EMAIL,email)
             }
         startActivity(signInIntent)
     }
@@ -41,8 +52,27 @@ class LoginActivity : AppCompatActivity() {
 
 
     //***COMPRUEBA CONTENIDO EN LOS EDIT TEXT***//
-    private fun comprobarCamposLogin(): Boolean {
+    private fun checkFieldsLogin(): Boolean {
      return (etEmail.text.isNotEmpty() && etPassword.text.isNotEmpty())
+    }
+
+
+    //***GOOGLE OPTIONS***//
+    private fun googleSignInRequest(): GoogleSignInOptions {
+        return GoogleSignInOptions
+            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+    }
+
+    //***SIGN IN CON GOOGLE EN FIREBASE***//
+    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
+        val credential = GoogleAuthProvider.getCredential(account!!.idToken, null)
+        firebaseAuth.signInWithCredential(credential)
+        createLoginIntent(
+            firebaseAuth.currentUser!!.email.toString())
+        println( "EMAIL:" + firebaseAuth.currentUser!!.email.toString())
     }
 
 
@@ -52,8 +82,9 @@ class LoginActivity : AppCompatActivity() {
             createSingInIntent()
         }
         btnLogin.setOnClickListener {
-            if (comprobarCamposLogin()) {
-                FirebaseAuth.getInstance()
+            if (checkFieldsLogin()) {
+                firebaseAuth = FirebaseAuth.getInstance()
+                firebaseAuth
                     .signInWithEmailAndPassword(
                         etEmail.text.toString(),
                         etPassword.text.toString()
@@ -62,9 +93,30 @@ class LoginActivity : AppCompatActivity() {
                         if (!it.isSuccessful){
                             getErrorSignIn()
                         }else{
-                            createLoginIntent()
+                            createLoginIntent(etEmail.text.toString())
                         }
                     }
+            }
+        }
+        btnGoogle.setOnClickListener{
+            googleSignInClient = GoogleSignIn.getClient(this, googleSignInRequest())
+            intent = googleSignInClient.signInIntent
+            startActivityForResult(intent, GOOGLE_SIGN_IN)
+        }
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode){
+            GOOGLE_SIGN_IN -> {
+                val accountTask = GoogleSignIn.getSignedInAccountFromIntent(data)
+                try{ //Google Sign In OK
+                    firebaseAuthWithGoogle(accountTask.getResult(ApiException::class.java))
+
+                }catch (ex: Exception){
+                    ex.cause
+                }
             }
         }
     }

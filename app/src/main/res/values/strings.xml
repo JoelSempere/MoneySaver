@@ -6,4 +6,6 @@
     <string name="hint_password2">Repite la Contraseña</string>
     <string name="sign_in">Registrarse</string>
     <string name="login">Acceder</string>
+    <string name="google">Acceder con Google</string>
+
 </resources>
