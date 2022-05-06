@@ -1,4 +1,4 @@
-package tfg.jsemp.moneysaver
+package tfg.jsemp.moneysaver.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +12,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
+import tfg.jsemp.moneysaver.R
 import tfg.jsemp.moneysaver.utils.ConstantsUtil.ConstantsLogin.GOOGLE_SIGN_IN
 import tfg.jsemp.moneysaver.utils.ConstantsUtil.ConstantsLogin.LOGIN_EMAIL
 import java.lang.Exception

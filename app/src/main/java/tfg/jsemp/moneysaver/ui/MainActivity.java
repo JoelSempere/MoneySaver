@@ -1,10 +1,12 @@
-package tfg.jsemp.moneysaver;
+package tfg.jsemp.moneysaver.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
 import com.google.firebase.auth.FirebaseAuth;
+
+import tfg.jsemp.moneysaver.R;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
