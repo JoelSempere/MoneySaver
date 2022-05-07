@@ -5,12 +5,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import tfg.jsemp.moneysaver.R
+import tfg.jsemp.moneysaver.model.User
 import tfg.jsemp.moneysaver.utils.ConstantsUtil.ConstantsLogin.LOGIN_EMAIL
+import tfg.jsemp.moneysaver.utils.FirestoreUtil
 
 class SignInActivity : AppCompatActivity() {
     lateinit var firebaseAuth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
@@ -60,6 +65,8 @@ class SignInActivity : AppCompatActivity() {
                         if (!it.isSuccessful) {
                             getErrorSignIn()
                         } else {
+                            var currentUser = FirestoreUtil.getUserinfo(firebaseAuth)
+                            FirestoreUtil.setUserInCollection(currentUser)
                             createLoginIntent()
                         }
                     }

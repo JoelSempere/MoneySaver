@@ -2,12 +2,13 @@ package tfg.jsemp.moneysaver.model;
 
 import androidx.annotation.NonNull;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     private String userId;
     private String email;
     private String name;
-    private String lastName;
     private String image;
 
 
@@ -16,10 +17,14 @@ public class User {
     }
 
 
-    public User(String email, String name, String lastName){
+    public User(String userId, String email){
+        this.userId = userId;
         this.email = email;
-        this.name = name;
-        this.lastName = lastName;
+        this.name = splitEmail(email);
+    }
+
+    private String splitEmail(String email) {
+        return email.split("@")[0];
     }
 
 
@@ -38,11 +43,6 @@ public class User {
     }
 
 
-    public String getLastName() {
-        return lastName;
-    }
-
-
     public String getImage() {
         return image;
     }
@@ -50,11 +50,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
 
@@ -69,7 +64,6 @@ public class User {
                 "userId='" + userId + '\'' +
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
                 '}';
     }
 
