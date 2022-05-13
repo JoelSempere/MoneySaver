@@ -29,13 +29,20 @@ public class FirestoreUtil {
         User currentUser = new User(
                 firebaseAuth.getCurrentUser().getUid(),
                 firebaseAuth.getCurrentUser().getEmail()
+                // TODO getUserField(firebaseAuth.getCurrentUser().getUid(),"name")
         );
         return currentUser;
     }
 
+    /*private static String getUserField(String uid, String field) {
+        return db.collection("Users")
+                .document(uid)
+                .get();
+    }TODO*/
+
 
     public static void setUserInCollection(User currentUser){
-        if (currentUser != null){
+        if(currentUser != null){
             docReference = db.collection("Users").document(currentUser.getUserId());
             docReference.set(currentUser).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -47,38 +54,12 @@ public class FirestoreUtil {
     }
 
 
-   public static void getCollection(String collection){
-       db.collection(collection)
-               .get()
-               .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                   @Override
-                   public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                       if (task.isSuccessful()) {
-                           for (QueryDocumentSnapshot document : task.getResult()) {
-                               Log.d("", document.getId() + " => " + document.getData());
-                           }
-                       } else {
-                           Log.w("", "Error getting documents.", task.getException());
-                       }
-                   }
-               });
+    public static void updateUser(User currentUser){
+        if(currentUser != null){
+            db.collection("Users")
+                    .document(currentUser.getUserId())
+                    .update("name", currentUser.getName());
+        }
     }
 
-
-    public static void setObjectToCollection(String collection, Object object){
-        db.collection(collection)
-                .add(object)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d("", "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("", "Error adding document", e);
-                    }
-                });
-    }
 }

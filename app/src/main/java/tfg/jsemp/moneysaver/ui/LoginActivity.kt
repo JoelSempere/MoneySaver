@@ -24,6 +24,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        firebaseAuth = FirebaseAuth.getInstance()
         val gImage = getDrawable(R.mipmap.google) //Unica manera de insertar la imagen en un button basico
         btnGoogle.setCompoundDrawablesWithIntrinsicBounds(gImage,null,null,null)
         iniciarApp()
@@ -62,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
     private fun googleSignInRequest(): GoogleSignInOptions {
         return GoogleSignInOptions
             .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken("74949683138-kmh37unjkp75vfkgio3g7j13nl8v7lph.apps.googleusercontent.com")
             .requestEmail()
             .build()
     }
@@ -70,10 +71,19 @@ class LoginActivity : AppCompatActivity() {
     //***SIGN IN CON GOOGLE EN FIREBASE***//
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
         val credential = GoogleAuthProvider.getCredential(account!!.idToken, null)
-        firebaseAuth.signInWithCredential(credential)
-        createLoginIntent(
-            firebaseAuth.currentUser!!.email.toString())
-        println( "EMAIL:" + firebaseAuth.currentUser!!.email.toString())
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener{
+            if(it.isSuccessful) {
+                createLoginIntent(
+                    firebaseAuth.currentUser!!.email.toString())
+                println( "EMAIL:" + firebaseAuth.currentUser!!.email.toString())
+                finish()
+            }
+            else {
+                //TODO
+                println("Error en firebaseAuth")
+            }
+        }
+
     }
 
 
@@ -113,7 +123,10 @@ class LoginActivity : AppCompatActivity() {
             GOOGLE_SIGN_IN -> {
                 val accountTask = GoogleSignIn.getSignedInAccountFromIntent(data)
                 try{ //Google Sign In OK
-                    firebaseAuthWithGoogle(accountTask.getResult(ApiException::class.java))
+                    if(accountTask.result != null){
+                        firebaseAuthWithGoogle(accountTask.getResult(ApiException::class.java))
+                    }
+
 
                 }catch (ex: Exception){
                     ex.cause
