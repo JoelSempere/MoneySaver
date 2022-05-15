@@ -1,30 +1,31 @@
 package tfg.jsemp.moneysaver.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Category {
+public class Category implements Serializable {
 
     private String categoryId;
     private String accountId;
     private String name;
-    private BigDecimal income;
-    private BigDecimal expense;
+    private int income;
+    private int expense;
 
 
     public Category(){
-        this.income = new BigDecimal("0");
-        this.expense = new BigDecimal("0");
+        this.income = 0;
+        this.expense = 0;
     }
 
     public Category(String accountId, String name){
         this.accountId = accountId;
         this.name = name;
-        this.income = new BigDecimal("0");
-        this.expense = new BigDecimal("0");
+        this.income = 0;
+        this.expense = 0;
     }
 
 
-    public Category(String accountId, String name, BigDecimal income, BigDecimal expense){
+    public Category(String accountId, String name, int income, int expense){
         this.accountId = accountId;
         this.name = name;
         this.income = income;
@@ -47,12 +48,12 @@ public class Category {
     }
 
 
-    public BigDecimal getIncome() {
+    public int getIncome() {
         return income;
     }
 
 
-    public BigDecimal getExpense() {
+    public int getExpense() {
         return expense;
     }
 
@@ -67,12 +68,12 @@ public class Category {
     }
 
 
-    public void setIncome(BigDecimal income) {
+    public void setIncome(int income) {
         this.income = income;
     }
 
 
-    public void setExpense(BigDecimal expense) {
+    public void setExpense(int expense) {
         this.expense = expense;
     }
 

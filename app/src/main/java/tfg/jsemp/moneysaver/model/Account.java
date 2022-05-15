@@ -1,33 +1,31 @@
 package tfg.jsemp.moneysaver.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Account {
+public class Account implements Serializable {
 
-    private String accountId;
+    private String name;
     private String userId;
-    private BigDecimal total;
+    private int total;
 
 
     public Account(){
-        this.total = new BigDecimal("0");
+        this.total = 0;
     }
 
 
-    public Account(String userId){
+    public Account(String userId, String name){
         this.userId = userId;
-        this.total = new BigDecimal("0");
+        this.name = name;
+        this.total = 0;
     }
 
 
-    public Account(String userId, BigDecimal total){
+    public Account(String userId, String name, int total){
         this.userId = userId;
+        this.name = name;
         this.total = total;
-    }
-
-
-    public String getAccountId() {
-        return accountId;
     }
 
 
@@ -36,29 +34,32 @@ public class Account {
     }
 
 
-    public BigDecimal getTotal() {
+    public int getTotal() {
         return total;
     }
 
 
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
+    public void setTotal(int total) {
+        this.total = total;
     }
 
 
-    public void setTotal(BigDecimal total) {
-        this.total = total;
+    public String getName() {
+        return name;
+    }
+
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 
     @Override
     public String toString() {
         return "Account{" +
-                "accountId='" + accountId + '\'' +
+                "name='" + name + '\'' +
                 ", userId='" + userId + '\'' +
                 ", total=" + total +
                 '}';
     }
-
-
 }

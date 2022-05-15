@@ -23,6 +23,14 @@ public class User implements Serializable {
         this.name = splitEmail(email);
     }
 
+
+    public User(String userId, String email, String name){
+        this.userId = userId;
+        this.email = email;
+        this.name = name;
+    }
+
+
     private String splitEmail(String email) {
         return email.split("@")[0];
     }

@@ -1,31 +1,32 @@
 package tfg.jsemp.moneysaver.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-public class Transaction {
+public class Transaction implements Serializable {
 
     private String transactionId;
-    private BigDecimal quantity;
+    private int quantity;
     private boolean isInCome;
     private LocalDate date;
 
 
     public Transaction(){
-        this.quantity = new BigDecimal("0");
+        this.quantity = 0;
         this.date = LocalDate.now();
     }
 
 
-    public Transaction(BigDecimal quantity, boolean isInCome) {
+    public Transaction(int quantity, boolean isInCome) {
         this.quantity = quantity;
         this.isInCome = isInCome;
         this.date = LocalDate.now();
     }
 
-    public Transaction(BigDecimal quantity, boolean isInCome, LocalDate date) {
+    public Transaction(int quantity, boolean isInCome, LocalDate date) {
         this.quantity = quantity;
         this.isInCome = isInCome;
         this.date = date;
@@ -37,7 +38,7 @@ public class Transaction {
     }
 
 
-    public BigDecimal getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
@@ -52,7 +53,7 @@ public class Transaction {
     }
 
 
-    public void setQuantity(BigDecimal quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 

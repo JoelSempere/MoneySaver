@@ -8,9 +8,6 @@ class ConstantsUtil {
         @kotlin.jvm.JvmField
         var CURRENT_USER = "tfg.jsemp.moneysaver.utils.CURRENT_USER"
         const val GOOGLE_SIGN_IN = 100
-
-
-
     }
 
 
