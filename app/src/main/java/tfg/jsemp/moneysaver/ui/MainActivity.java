@@ -1,6 +1,7 @@
 package tfg.jsemp.moneysaver.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +15,6 @@ import tfg.jsemp.moneysaver.utils.FirestoreUtil;
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private Intent intent;
-    private User currentUser;
     private ImageButton btnProfile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +33,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void onClickButtons() {
         btnProfile.setOnClickListener(c -> {
-            currentUser = FirestoreUtil.getUserinfo(firebaseAuth);
-            if(currentUser != null){
-                intent = new Intent(MainActivity.this, ProfileActivity.class);
-                intent.putExtra(ConstantsUtil.ConstantsLogin.CURRENT_USER, currentUser);
-                startActivity(intent);
-            }
+            FirestoreUtil.getUserinfo(firebaseAuth).observe(this, new Observer<User>() {
+                @Override
+                public void onChanged(User user) {
+                        intent = new Intent(MainActivity.this, ProfileActivity.class);
+                        intent.putExtra(ConstantsUtil.ConstantsLogin.CURRENT_USER, user);
+                        startActivity(intent);
+                        finish();
+                    }
+            });
         });
     }
 }

@@ -1,5 +1,6 @@
 package tfg.jsemp.moneysaver.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,7 @@ class ProfileActivity : AppCompatActivity() {
         setUserInfo()
         onEditAction()
         onSaveAction()
+        onChangeActivity()
 
     }
 
@@ -51,5 +53,15 @@ class ProfileActivity : AppCompatActivity() {
 
                 }
             }
+    }
+
+
+    private fun onChangeActivity() {
+        btnMain.setOnClickListener {
+         intent = Intent(applicationContext, MainActivity::class.java)
+         startActivity(intent)
+         finish()
+        }
+
     }
 }

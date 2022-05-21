@@ -1,12 +1,13 @@
 package tfg.jsemp.moneysaver.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import tfg.jsemp.moneysaver.R
+import tfg.jsemp.moneysaver.utils.ConstantsUtil
 import tfg.jsemp.moneysaver.utils.ConstantsUtil.ConstantsLogin.LOGIN_EMAIL
 import tfg.jsemp.moneysaver.utils.FirestoreUtil
 
@@ -16,6 +17,7 @@ class SignInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
+        firebaseAuth = FirebaseAuth.getInstance()
         iniciarApp()
     }
 
@@ -52,9 +54,7 @@ class SignInActivity : AppCompatActivity() {
         btnSignIn.setOnClickListener {
             println("@Joel: Comprobar Boolean - 17/04/22 - " + comprobarCamposLogin())
             if (comprobarCamposLogin()) {
-                firebaseAuth = FirebaseAuth.getInstance()
-                firebaseAuth
-                    .createUserWithEmailAndPassword(
+                firebaseAuth.createUserWithEmailAndPassword(
                         etEmail.text.toString(),
                         etPassword.text.toString()
                     )
@@ -62,9 +62,10 @@ class SignInActivity : AppCompatActivity() {
                         if (!it.isSuccessful) {
                             getErrorSignIn()
                         } else {
-                            var currentUser = FirestoreUtil.getUserinfo(firebaseAuth)
-                            FirestoreUtil.initUserInCollection(currentUser)
-                            createLoginIntent()
+                            FirestoreUtil.getUserinfo(firebaseAuth).observe( this) { user ->
+                                    FirestoreUtil.initUserInCollection(user)
+                                    createLoginIntent()
+                            }
                         }
                     }
             }

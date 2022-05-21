@@ -44,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
                 putExtra(LOGIN_EMAIL,email)
             }
         startActivity(signInIntent)
+        finish()
     }
 
 

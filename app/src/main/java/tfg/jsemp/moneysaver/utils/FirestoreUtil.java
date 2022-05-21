@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -29,37 +30,36 @@ import tfg.jsemp.moneysaver.model.User;
 public class FirestoreUtil {
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static DocumentReference docReference;
-    private static User currentUser;
-
-
     public FirestoreUtil() {
     }
 
-
-    public static User getUserinfo(FirebaseAuth firebaseAuth) {
+    //********Pasado como mutable, esperando una respuesta del metodo asincrono*************//
+    public static MutableLiveData<User> getUserinfo(@NonNull FirebaseAuth firebaseAuth) {
+        MutableLiveData<User> currentUserAsync = new MutableLiveData<>();
         docReference = db.collection("Users").document(firebaseAuth.getCurrentUser().getUid());
         if (docReference != null) {
             docReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    System.out.println(documentSnapshot.exists());
-                    if (documentSnapshot.exists()) {
-                        currentUser = new User(
+                public void onSuccess(DocumentSnapshot document) {
+                    if(document.exists()) {
+                        currentUserAsync.setValue(new User(
                                 firebaseAuth.getCurrentUser().getUid(),
                                 firebaseAuth.getCurrentUser().getEmail(),
-                                documentSnapshot.getString("name")
-                        );
+                                document.getString("name")
+                        ));
+                    }
+                    else {
+                        currentUserAsync.setValue(new User(
+                                firebaseAuth.getCurrentUser().getUid(),
+                                firebaseAuth.getCurrentUser().getEmail()
+
+                        ));
                     }
                 }
             });
         }
-        else {
-            currentUser = new User(
-                    firebaseAuth.getCurrentUser().getUid(),
-                    firebaseAuth.getCurrentUser().getEmail()
-            );
-        }
-        return currentUser;
+        System.out.println("@Joel: valor del usuario - 21/05/22 - " + currentUserAsync.getValue());
+        return currentUserAsync;
     }
 
 
@@ -96,6 +96,11 @@ public class FirestoreUtil {
                     .document(currentUser.getUserId())
                     .update("name", currentUser.getName());
         }
+    }
+
+
+    public interface FirestoreCallback {
+        User onCallback(User currentUser);
     }
 
 }
