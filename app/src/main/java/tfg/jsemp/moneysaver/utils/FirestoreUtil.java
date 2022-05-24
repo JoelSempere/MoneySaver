@@ -1,5 +1,6 @@
 package tfg.jsemp.moneysaver.utils;
 
+import android.app.Application;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import tfg.jsemp.moneysaver.model.Account;
@@ -28,10 +30,25 @@ import tfg.jsemp.moneysaver.model.Economy;
 import tfg.jsemp.moneysaver.model.User;
 
 public class FirestoreUtil {
+    private static volatile FirestoreUtil INSTANCE;
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static DocumentReference docReference;
+
     public FirestoreUtil() {
     }
+
+
+    public static FirestoreUtil getInstance(Application application){
+        if (INSTANCE == null) {
+            synchronized (FirestoreUtil.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new FirestoreUtil();
+                }
+            }
+        }
+        return INSTANCE;
+    }
+
 
     //********Pasado como mutable, esperando una respuesta del metodo asincrono*************//
     public static MutableLiveData<User> getUserinfo(@NonNull FirebaseAuth firebaseAuth) {
@@ -77,16 +94,25 @@ public class FirestoreUtil {
                     for(DocumentChange doc : value.getDocumentChanges()){
                         if (doc.getType() == DocumentChange.Type.ADDED) {
                             Log.d("SubBrands Name: ", doc.getDocument().getId());
-                            db.collection("Users").document(currentUser.getUserId())
-                                    .collection("Economy").document(doc.getDocument().getId())
-                                    .collection("Accounts").document()
-                                    .set(new Account(currentUser.getUserId(),"Principal" , 0));
+                            setAccounts(doc,currentUser.getUserId(), "Principal");
+                            setAccounts(doc,currentUser.getUserId(), "Secundaria");
                         }
                     }
+                    getAccounts(currentUser.getUserId());
                 }
             });
 
+
+
         }
+    }
+
+
+    public static void setAccounts(DocumentChange doc, String id, String name) {
+        db.collection("Users").document(id)
+                .collection("Economy").document(doc.getDocument().getId())
+                .collection("Accounts").document()
+                .set(new Account(id, name, 0));
     }
 
 
@@ -99,8 +125,33 @@ public class FirestoreUtil {
     }
 
 
-    public interface FirestoreCallback {
-        User onCallback(User currentUser);
+    public static MutableLiveData<Economy> getEconomy(String userId) {
+        MutableLiveData<Economy> economy = new MutableLiveData<>();
+       Query economyId = db.collection("Users/" + userId + "/Economy/")
+                    .whereEqualTo("userId",  userId);
+            economyId.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    for(QueryDocumentSnapshot doc : task.getResult()) {
+                        economy.setValue(doc.toObject(Economy.class));
+                    }
+                }
+            });
+            return economy;
+    }
+
+
+    public static MutableLiveData<List<Account>> getAccounts(String userId) {
+        MutableLiveData<List<Account>> accounts = new MutableLiveData<>();
+        Query query = db.collectionGroup("Accounts")
+                .whereEqualTo("userId", userId);
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+               accounts.setValue(task.getResult().toObjects(Account.class));
+            }
+        });
+        return accounts;
     }
 
 }

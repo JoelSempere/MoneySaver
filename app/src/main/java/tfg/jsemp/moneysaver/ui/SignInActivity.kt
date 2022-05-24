@@ -23,8 +23,8 @@ class SignInActivity : AppCompatActivity() {
 
 
     //***CONTROL DE ERRORES REGISTRO***//
-    private fun getErrorSignIn() {
-        Toast.makeText(this, getString(R.string.msg_ukn_err), Toast.LENGTH_LONG).show()
+    private fun getErrorSignIn(text : String) {
+        Toast.makeText(this, getString(R.string.msg_ukn_err) + text , Toast.LENGTH_LONG).show()
     }
 
 
@@ -60,7 +60,8 @@ class SignInActivity : AppCompatActivity() {
                     )
                     .addOnCompleteListener {
                         if (!it.isSuccessful) {
-                            getErrorSignIn()
+                            getErrorSignIn(it.result.toString())
+
                         } else {
                             FirestoreUtil.getUserinfo(firebaseAuth).observe( this) { user ->
                                     FirestoreUtil.initUserInCollection(user)

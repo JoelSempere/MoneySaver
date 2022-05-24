@@ -62,6 +62,11 @@ class ProfileActivity : AppCompatActivity() {
          startActivity(intent)
          finish()
         }
+        btnWallet.setOnClickListener{
+            intent = Intent(applicationContext, WalletActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
     }
 }

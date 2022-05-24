@@ -16,22 +16,24 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private Intent intent;
     private ImageButton btnProfile;
+    private ImageButton btnWallet;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         firebaseAuth = FirebaseAuth.getInstance();
         initViews();
-        onClickButtons();
+        onChangeActivity();
     }
 
 
     private void initViews() {
         btnProfile = findViewById(R.id.btnProfile);
+        btnWallet = findViewById(R.id.btnWallet);
     }
 
 
-    private void onClickButtons() {
+    private void onChangeActivity() {
         btnProfile.setOnClickListener(c -> {
             FirestoreUtil.getUserinfo(firebaseAuth).observe(this, new Observer<User>() {
                 @Override
@@ -42,6 +44,12 @@ public class MainActivity extends AppCompatActivity {
                         finish();
                     }
             });
+        });
+        btnWallet.setOnClickListener(c -> {
+            //TODO
+            intent = new Intent(MainActivity.this, WalletActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 }
