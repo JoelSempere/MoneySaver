@@ -8,10 +8,10 @@ import java.util.Date;
 
 public class Transaction implements Serializable {
 
-    private String transactionId;
     private int quantity;
     private boolean isInCome;
     private LocalDate date;
+    private String userId;
 
 
     public Transaction(){
@@ -20,21 +20,18 @@ public class Transaction implements Serializable {
     }
 
 
-    public Transaction(int quantity, boolean isInCome) {
+    public Transaction(int quantity, boolean isInCome, String userId) {
         this.quantity = quantity;
         this.isInCome = isInCome;
+        this.userId = userId;
         this.date = LocalDate.now();
     }
 
-    public Transaction(int quantity, boolean isInCome, LocalDate date) {
+    public Transaction(int quantity, boolean isInCome, LocalDate date, String userId) {
         this.quantity = quantity;
         this.isInCome = isInCome;
         this.date = date;
-    }
-
-
-    public String getTransactionId() {
-        return transactionId;
+        this.userId = userId;
     }
 
 
@@ -67,11 +64,13 @@ public class Transaction implements Serializable {
         this.date = date;
     }
 
+    public String getUserId() {
+        return userId;
+    }
 
     @Override
     public String toString() {
         return "Transaction{" +
-                "transactionId='" + transactionId + '\'' +
                 ", quantity=" + quantity +
                 ", isInCome=" + isInCome +
                 ", date=" + date +

@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import tfg.jsemp.moneysaver.R
 import tfg.jsemp.moneysaver.utils.ConstantsUtil.ConstantsLogin.GOOGLE_SIGN_IN
 import tfg.jsemp.moneysaver.utils.ConstantsUtil.ConstantsLogin.LOGIN_EMAIL
+import tfg.jsemp.moneysaver.utils.FirestoreUtil
 import java.lang.Exception
 
 
@@ -74,10 +75,13 @@ class LoginActivity : AppCompatActivity() {
         val credential = GoogleAuthProvider.getCredential(account!!.idToken, null)
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener{
             if(it.isSuccessful) {
-                createLoginIntent(
-                    firebaseAuth.currentUser!!.email.toString())
-                println( "EMAIL:" + firebaseAuth.currentUser!!.email.toString())
-                finish()
+                FirestoreUtil.getUserinfo(firebaseAuth).observe(this){ //Controlamos si el usuario ya existe (Evitar duplicidad de cuentas y economias)
+                    createLoginIntent(
+                        firebaseAuth.currentUser!!.email.toString())
+                    println( "EMAIL:" + firebaseAuth.currentUser!!.email.toString())
+                    finish()
+                }
+
             }
             else {
                 //TODO

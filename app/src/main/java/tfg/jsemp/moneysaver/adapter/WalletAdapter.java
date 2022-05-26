@@ -15,6 +15,18 @@ import tfg.jsemp.moneysaver.R;
 import tfg.jsemp.moneysaver.model.Account;
 
 public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletViewHolder>{
+
+    public interface onItemClickListener {
+        void onItemClick(Account account);
+    }
+
+
+    public void setOnClickListener(onItemClickListener listener) {
+        this.listener = listener;
+    }
+
+
+    private onItemClickListener listener;
     private final LayoutInflater mInflater;
     private List<Account> mAccounts;
 
@@ -64,16 +76,34 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
         public WalletViewHolder(@NonNull View itemView) {
             super(itemView);
             iniciaViews();
+            clickItem(itemView);
         }
+
 
         public Account getDia(){ //nos devuelve el dia que muestra
             return mAccounts.get(WalletViewHolder.this
                     .getAdapterPosition());
         }
 
+
         private void iniciaViews() {
             this.tvWalletName = itemView.findViewById(R.id.tvWalletName);
             this.tvQuantity = itemView.findViewById(R.id.tvQuantity);
         }
+
+
+        private void clickItem(View itemView) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null){
+                        listener.onItemClick(mAccounts.get(WalletViewHolder.this.getAdapterPosition()));
+                    }
+                }
+            });
+        }
+
+
     }
+
 }

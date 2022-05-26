@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,27 +27,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tfg.jsemp.moneysaver.model.Account;
+import tfg.jsemp.moneysaver.model.Category;
 import tfg.jsemp.moneysaver.model.Economy;
 import tfg.jsemp.moneysaver.model.User;
 
 public class FirestoreUtil {
-    private static volatile FirestoreUtil INSTANCE;
     private static FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static DocumentReference docReference;
 
     public FirestoreUtil() {
-    }
-
-
-    public static FirestoreUtil getInstance(Application application){
-        if (INSTANCE == null) {
-            synchronized (FirestoreUtil.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new FirestoreUtil();
-                }
-            }
-        }
-        return INSTANCE;
     }
 
 
@@ -71,6 +60,7 @@ public class FirestoreUtil {
                                 firebaseAuth.getCurrentUser().getEmail()
 
                         ));
+                        FirestoreUtil.initUserInCollection(currentUserAsync.getValue());
                     }
                 }
             });
@@ -98,12 +88,9 @@ public class FirestoreUtil {
                             setAccounts(doc,currentUser.getUserId(), "Secundaria");
                         }
                     }
-                    getAccounts(currentUser.getUserId());
+                    //getAccounts(currentUser.getUserId());
                 }
             });
-
-
-
         }
     }
 
@@ -152,6 +139,18 @@ public class FirestoreUtil {
             }
         });
         return accounts;
+    }
+
+
+    public static MutableLiveData<List<Category>> getCategories() {
+        MutableLiveData<List<Category>> categories = new MutableLiveData<>();
+        db.collection("Categories").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                categories.setValue(task.getResult().toObjects(Category.class));
+            }
+        });
+        return categories;
     }
 
 }

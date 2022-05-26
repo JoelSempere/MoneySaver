@@ -63,8 +63,8 @@ class SignInActivity : AppCompatActivity() {
                             getErrorSignIn(it.result.toString())
 
                         } else {
-                            FirestoreUtil.getUserinfo(firebaseAuth).observe( this) { user ->
-                                    FirestoreUtil.initUserInCollection(user)
+                            FirestoreUtil.getUserinfo(firebaseAuth).observe( this) {
+                                   // FirestoreUtil.initUserInCollection(user)
                                     createLoginIntent()
                             }
                         }

@@ -6,30 +6,49 @@ import java.math.BigDecimal;
 public class Category implements Serializable {
 
     private String categoryId;
-    private String accountId;
     private String name;
-    private int income;
-    private int expense;
+    private float income;
+    private float expense;
+    private String image;
 
 
     public Category(){
         this.income = 0;
         this.expense = 0;
+        this.image = "";
+        this.name = "uknown";
     }
 
-    public Category(String accountId, String name){
-        this.accountId = accountId;
+    public Category(String name){
         this.name = name;
+        this.income = 0;
+        this.expense = 0;
+        this.image = "";
+    }
+
+
+    public Category(String name,String image){
+        this.name = name;
+        this.image = image;
         this.income = 0;
         this.expense = 0;
     }
 
 
-    public Category(String accountId, String name, int income, int expense){
-        this.accountId = accountId;
+    public Category(String name, int income, int expense){
         this.name = name;
         this.income = income;
         this.expense = expense;
+        this.image = "";
+    }
+
+
+    public Category(String name, String image, int income, int expense){
+        this.name = name;
+        this.image = image;
+        this.income = income;
+        this.expense = expense;
+        this.image = "";
     }
 
 
@@ -38,22 +57,17 @@ public class Category implements Serializable {
     }
 
 
-    public String getAccountId() {
-        return accountId;
-    }
-
-
     public String getName() {
         return name;
     }
 
 
-    public int getIncome() {
+    public float getIncome() {
         return income;
     }
 
 
-    public int getExpense() {
+    public float getExpense() {
         return expense;
     }
 
@@ -77,12 +91,18 @@ public class Category implements Serializable {
         this.expense = expense;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     @Override
     public String toString() {
         return "Category{" +
                 "categoryId='" + categoryId + '\'' +
-                ", accountId='" + accountId + '\'' +
                 ", name='" + name + '\'' +
                 ", income=" + income +
                 ", expense=" + expense +

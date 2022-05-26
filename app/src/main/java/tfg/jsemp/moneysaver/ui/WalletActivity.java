@@ -40,6 +40,7 @@ public class WalletActivity extends AppCompatActivity {
         onChangeActivity();
         final WalletAdapter adapter = new WalletAdapter(this);
         setRecyclerViewOnActivity(adapter);
+        onClickItem(adapter);
 
     }
 
@@ -54,21 +55,17 @@ public class WalletActivity extends AppCompatActivity {
                 adapter.setAccounts(accounts);
             }
         });
-        /*
-         FirestoreUtil.getAccounts(firebaseAuth.getCurrentUser().getUid()).observe(this, new Observer<List<Account>>() {
-            @Override
-            public void onChanged(List<Account> accounts) {
-                adapter.setAccounts(accounts);
-            }
-        });
-         */
     }
 
 
-    private void initViews() {
-        btnProfile = findViewById(R.id.btnProfile);
-        btnMain = findViewById(R.id.btnMain);
-        rvWallets = findViewById(R.id.rvWallets);
+
+    private void onClickItem(WalletAdapter adapter) {
+        adapter.setOnClickListener(new WalletAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(Account account) {
+                //TODO Editar cantidad total, System.out.println(account);
+            }
+        });
     }
 
 
@@ -89,6 +86,13 @@ public class WalletActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+    }
+
+
+    private void initViews() {
+        btnProfile = findViewById(R.id.btnProfile);
+        btnMain = findViewById(R.id.btnMain);
+        rvWallets = findViewById(R.id.rvWallets);
     }
 
 }
