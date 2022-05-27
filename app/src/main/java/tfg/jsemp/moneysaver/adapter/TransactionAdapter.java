@@ -22,6 +22,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<tfg.jsemp.moneysave
 
     public TransactionAdapter(List<Transaction> transactions) {
         this.mTransactions = transactions;
+        notifyDataSetChanged();
     }
 
     @NonNull

@@ -43,8 +43,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             CtWrapper categoryWrapper = mCategoriesWrapper.get(position);
             //TODO set image
             holder.tvSaldo.setText(
-                    (categoryWrapper.getCategory().getIncome() - categoryWrapper.getCategory()
-                            .getExpense()) + " €"
+                    (categoryWrapper.getCategory().getIncome() - categoryWrapper.getCategory().getExpense()) + " €"
             );
             holder.tvCategory.setText(categoryWrapper.getCategory().getName());
             //****NESTED RECYCLER VIEW****//
@@ -76,7 +75,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         }
     }
 
-    public void setCategories(List<CtWrapper> categories) { //No creo que lo utilice, esta definido en el constructor
+    public void setCategories(List<CtWrapper> categories) {
         mCategoriesWrapper = categories;
         notifyDataSetChanged();
     }

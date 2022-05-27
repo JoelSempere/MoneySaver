@@ -1,8 +1,11 @@
 package tfg.jsemp.moneysaver.model;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.List;
 //*****CLASE WRAPPER PARA TRABAJAR LOS RECYCLER VIEWS ANIDADOS*****//
-public class CtWrapper {
+public class CtWrapper implements Serializable {
     private Category category;
     private List<Transaction> transactions;
 

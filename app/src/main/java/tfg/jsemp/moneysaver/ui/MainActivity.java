@@ -2,10 +2,13 @@ package tfg.jsemp.moneysaver.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import tfg.jsemp.moneysaver.R;
 import tfg.jsemp.moneysaver.model.User;
@@ -17,6 +20,15 @@ public class MainActivity extends AppCompatActivity {
     private Intent intent;
     private ImageButton btnProfile;
     private ImageButton btnWallet;
+    private TextView tvMonth;
+    private TextView tvIngreso;
+    private TextView tvGasto;
+    private TextView tvSaldoDisponible;
+    private TextView tvQttyIngreso;
+    private TextView tvQttyGasto;
+    private TextView tvQttySaldo;
+    private RecyclerView rvCategories;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,12 +36,6 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         initViews();
         onChangeActivity();
-    }
-
-
-    private void initViews() {
-        btnProfile = findViewById(R.id.btnProfile);
-        btnWallet = findViewById(R.id.btnWallet);
     }
 
 
@@ -52,4 +58,20 @@ public class MainActivity extends AppCompatActivity {
             finish();
         });
     }
+
+
+    private void initViews() {
+        btnProfile = findViewById(R.id.btnProfile);
+        btnWallet = findViewById(R.id.btnWallet);
+        tvMonth = findViewById(R.id.tvMonth);
+        tvIngreso = findViewById(R.id.tvIngreso);
+        tvGasto = findViewById(R.id.tvGasto);
+        tvSaldoDisponible = findViewById(R.id.tvSaldoDisponible);
+        tvQttyIngreso = findViewById(R.id.tvqttyIngreso);
+        tvQttyGasto = findViewById(R.id.tvqttyGasto);
+        tvQttySaldo = findViewById(R.id.tvqttySaldo);
+        rvCategories = findViewById(R.id.rvCategoriesMain);
+    }
+
+
 }
