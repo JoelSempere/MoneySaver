@@ -200,17 +200,6 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.12" />
 
-    <SearchView
-        android:id="@+id/svTransactions"
-        android:layout_width="0dp"
-        android:layout_height="25dp"
-        app:layout_constraintBottom_toTopOf="@+id/rvCategoriesMain"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cvInfoMain">
-
-    </SearchView>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCategoriesMain"
         android:layout_width="0dp"
@@ -218,7 +207,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btnMain"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/svTransactions"
+        app:layout_constraintTop_toBottomOf="@+id/cvInfoMain"
         tools:listitem="@layout/item_category" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

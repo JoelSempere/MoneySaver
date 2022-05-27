@@ -12,6 +12,7 @@ public class Transaction implements Serializable {
     private boolean isInCome;
     private LocalDate date;
     private String userId;
+    private String accountId;
 
 
     public Transaction(){
@@ -27,11 +28,27 @@ public class Transaction implements Serializable {
         this.date = LocalDate.now();
     }
 
+    public Transaction(int quantity, boolean isInCome, String userId, String accountId) {
+        this.quantity = quantity;
+        this.isInCome = isInCome;
+        this.userId = userId;
+        this.date = LocalDate.now();
+        this.accountId = accountId;
+    }
+
     public Transaction(int quantity, boolean isInCome, LocalDate date, String userId) {
         this.quantity = quantity;
         this.isInCome = isInCome;
         this.date = date;
         this.userId = userId;
+    }
+
+    public Transaction(int quantity, boolean isInCome, LocalDate date, String userId, String accountId) {
+        this.quantity = quantity;
+        this.isInCome = isInCome;
+        this.date = date;
+        this.userId = userId;
+        this.accountId = accountId;
     }
 
 
@@ -68,14 +85,26 @@ public class Transaction implements Serializable {
         return userId;
     }
 
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+
     @Override
     public String toString() {
         return "Transaction{" +
-                ", quantity=" + quantity +
+                "quantity=" + quantity +
                 ", isInCome=" + isInCome +
                 ", date=" + date +
+                ", userId='" + userId + '\'' +
+                ", accountId='" + accountId + '\'' +
                 '}';
     }
-
 
 }

@@ -1,0 +1,30 @@
+package tfg.jsemp.moneysaver.model;
+
+import java.util.List;
+//*****CLASE WRAPPER PARA TRABAJAR LOS RECYCLER VIEWS ANIDADOS*****//
+public class CtWrapper {
+    private Category category;
+    private List<Transaction> transactions;
+
+
+    public CtWrapper(Category category, List<Transaction> transactions) {
+        this.category = category;
+        this.transactions = transactions;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
+    }
+}
