@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MoneySaver">
         <activity
+            android:name=".ui.CreateTransaction"
+            android:exported="false" />
+        <activity
             android:name=".ui.WalletActivity"
             android:exported="false" />
         <activity

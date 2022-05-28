@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import tfg.jsemp.moneysaver.R;
 import tfg.jsemp.moneysaver.model.User;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private Intent intent;
     private ImageButton btnProfile;
     private ImageButton btnWallet;
+    private FloatingActionButton fabAddTransaction;
     private TextView tvMonth;
     private TextView tvIngreso;
     private TextView tvGasto;
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void onChangeActivity() {
-        btnProfile.setOnClickListener(c -> {
+        btnProfile.setOnClickListener( c -> {
             FirestoreUtil.getUserinfo(firebaseAuth).observe(this, new Observer<User>() {
                 @Override
                 public void onChanged(User user) {
@@ -51,11 +53,16 @@ public class MainActivity extends AppCompatActivity {
                     }
             });
         });
-        btnWallet.setOnClickListener(c -> {
-            //TODO
+
+        btnWallet.setOnClickListener( c -> {
             intent = new Intent(MainActivity.this, WalletActivity.class);
             startActivity(intent);
             finish();
+        });
+
+        fabAddTransaction.setOnClickListener( c -> {
+            intent = new Intent(MainActivity.this, CreateTransaction.class);
+            startActivity(intent);
         });
     }
 
@@ -63,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         btnProfile = findViewById(R.id.btnProfile);
         btnWallet = findViewById(R.id.btnWallet);
+        fabAddTransaction = findViewById(R.id.fabAddTransaction);
         tvMonth = findViewById(R.id.tvMonth);
         tvIngreso = findViewById(R.id.tvIngreso);
         tvGasto = findViewById(R.id.tvGasto);

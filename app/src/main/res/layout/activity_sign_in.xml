@@ -10,15 +10,14 @@
         android:id="@+id/etEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="0dp"
+        android:layout_marginHorizontal="8dp"
         android:ems="10"
         android:hint="@string/fui_email_hint"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/etPassword"
-        app:layout_constraintEnd_toEndOf="@+id/ivLogo"
-        app:layout_constraintStart_toStartOf="@+id/ivLogo"
-        app:layout_constraintTop_toBottomOf="@+id/ivLogo" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline9" />
 
     <EditText
         android:id="@+id/etPassword"
@@ -39,11 +38,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="19dp"
         android:ems="10"
         android:hint="@string/hint_password2"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/btnSignIn"
         app:layout_constraintEnd_toEndOf="@+id/etPassword"
         app:layout_constraintStart_toStartOf="@+id/etPassword"
         app:layout_constraintTop_toBottomOf="@+id/etPassword" />
@@ -53,25 +50,30 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:height="60dp"
         android:text="@string/sign_in"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/etPassword2"
-        app:layout_constraintStart_toStartOf="@+id/etPassword2"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword2" />
+        app:layout_constraintStart_toStartOf="@+id/etPassword2" />
 
     <ImageView
         android:id="@+id/ivLogo"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="244dp"
+        android:layout_height="226dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="9dp"
-        app:layout_constraintBottom_toTopOf="@+id/etEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/mslogo" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.500684" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

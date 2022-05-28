@@ -134,14 +134,19 @@
         app:layout_constraintTop_toTopOf="@+id/ivProfile"
         app:srcCompat="@android:drawable/ic_menu_edit" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btnSaveChanges"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:padding="16dp"
-        android:visibility="invisible"
+        android:text="GUARDAR"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:visibility="visible"
         app:backgroundTint="@color/primary"
+        app:elevation="20dp"
+        app:icon="@android:drawable/ic_menu_save"
         app:layout_constraintBottom_toTopOf="@+id/btnMain"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
