@@ -29,6 +29,7 @@ import java.util.List;
 import tfg.jsemp.moneysaver.model.Account;
 import tfg.jsemp.moneysaver.model.Category;
 import tfg.jsemp.moneysaver.model.Economy;
+import tfg.jsemp.moneysaver.model.Transaction;
 import tfg.jsemp.moneysaver.model.User;
 
 public class FirestoreUtil {
@@ -95,14 +96,6 @@ public class FirestoreUtil {
     }
 
 
-    public static void setAccounts(DocumentChange doc, String id, String name) {
-        db.collection("Users").document(id)
-                .collection("Economy").document(doc.getDocument().getId())
-                .collection("Accounts").document()
-                .set(new Account(id, name, 0));
-    }
-
-
     public static void updateUserName(User currentUser){
         if(currentUser != null){
             db.collection("Users")
@@ -141,6 +134,13 @@ public class FirestoreUtil {
         return accounts;
     }
 
+    public static void setAccounts(DocumentChange doc, String id, String name) {
+        db.collection("Users").document(id)
+                .collection("Economy").document(doc.getDocument().getId())
+                .collection("Accounts").document()
+                .set(new Account(id, name, 0));
+    }
+
 
     public static MutableLiveData<List<Category>> getCategories() {
         MutableLiveData<List<Category>> categories = new MutableLiveData<>();
@@ -151,6 +151,29 @@ public class FirestoreUtil {
             }
         });
         return categories;
+    }
+
+    /***Devuelve la Id de cualquier documento almacenado en firestore***/
+    public static MutableLiveData<String> getIdByName(String name, String collection) {
+        MutableLiveData<String> objId = new MutableLiveData<>();
+        Query query = db.collectionGroup(collection)
+                .whereEqualTo("name", name);
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for(QueryDocumentSnapshot doc : task.getResult()) {
+                    objId.setValue(doc.getId());
+                }
+            }
+        });
+        return objId;
+    }
+
+    //TODO pendiente de testear 29-05
+    public static void setTransactionsIntoCategories(String categoryId, Transaction transaction) {
+        db.collection("Categories").document(categoryId)
+                .collection("Transactions").document()
+                .set(transaction);
     }
 
 }

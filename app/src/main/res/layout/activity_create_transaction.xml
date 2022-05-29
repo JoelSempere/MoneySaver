@@ -56,12 +56,9 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tfCantidad"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
                 android:hint="Introducir Cantidad"
                 app:endIconDrawable="@android:drawable/ic_menu_close_clear_cancel"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -89,7 +86,8 @@
                 android:showText="false"
                 android:text="Ingreso"
                 android:textAllCaps="true"
-                app:layout_constraintEnd_toEndOf="@+id/spWallet"
+                app:layout_constraintBottom_toTopOf="@+id/guideline7"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/spWallet"
                 app:layout_constraintTop_toBottomOf="@+id/spWallet" />
 
@@ -97,24 +95,25 @@
                 android:id="@+id/spWallet"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="50dp"
                 android:layout_weight="1"
-                app:layout_constraintEnd_toEndOf="@+id/spCategory"
-                app:layout_constraintStart_toStartOf="@+id/spCategory"
+                app:layout_constraintBottom_toTopOf="@+id/swIsInCome"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spCategory" />
 
             <Spinner
                 android:id="@+id/spCategory"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
                 android:layout_weight="1"
-                app:layout_constraintEnd_toEndOf="@+id/tfCantidad"
-                app:layout_constraintStart_toStartOf="@+id/tfCantidad"
+                app:layout_constraintBottom_toTopOf="@+id/spWallet"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tfCantidad" />
 
             <com.google.android.material.divider.MaterialDivider

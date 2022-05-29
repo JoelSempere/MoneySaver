@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 public class Account implements Serializable {
 
     private String name;
+    private String categoryId;
     private String userId;
     private int total;
 
@@ -23,6 +24,13 @@ public class Account implements Serializable {
 
 
     public Account(String userId, String name, int total){
+        this.userId = userId;
+        this.name = name;
+        this.total = total;
+    }
+
+    public Account(String categoryId, String userId, String name, int total){
+        this.categoryId = categoryId;
         this.userId = userId;
         this.name = name;
         this.total = total;
@@ -53,6 +61,17 @@ public class Account implements Serializable {
         this.name = name;
     }
 
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     @Override
     public String toString() {

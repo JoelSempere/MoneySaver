@@ -1,5 +1,6 @@
 package tfg.jsemp.moneysaver.ui;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import tfg.jsemp.moneysaver.R;
+import tfg.jsemp.moneysaver.model.Transaction;
 import tfg.jsemp.moneysaver.model.User;
 import tfg.jsemp.moneysaver.utils.ConstantsUtil;
 import tfg.jsemp.moneysaver.utils.FirestoreUtil;
@@ -62,8 +64,24 @@ public class MainActivity extends AppCompatActivity {
 
         fabAddTransaction.setOnClickListener( c -> {
             intent = new Intent(MainActivity.this, CreateTransaction.class);
-            startActivity(intent);
+            startActivityForResult(intent,
+                    ConstantsUtil.ConstantsTransaction.OPTION_REQUEST_NEW_TRANSACTION);
         });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_CANCELED){
+            Transaction transaction;
+            //TODO transaction = (Transaction) data.getParcelableExtra(//add extra on constants);
+            switch (requestCode){
+                case ConstantsUtil.ConstantsTransaction.OPTION_REQUEST_NEW_TRANSACTION:
+                   //TODO addTransaction(transaction);
+                    break;
+            }
+        }
     }
 
 

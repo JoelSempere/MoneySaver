@@ -1,23 +1,27 @@
 package tfg.jsemp.moneysaver.model;
 
+import com.google.firebase.Timestamp;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Transaction implements Serializable {
 
-    private int quantity;
+    private float quantity;
     private boolean isInCome;
-    private LocalDate date;
+    private Timestamp date;
     private String userId;
     private String accountId;
+    private String categoryId;
 
 
     public Transaction(){
         this.quantity = 0;
-        this.date = LocalDate.now();
+        this.date = Timestamp.now();
     }
 
 
@@ -25,25 +29,26 @@ public class Transaction implements Serializable {
         this.quantity = quantity;
         this.isInCome = isInCome;
         this.userId = userId;
-        this.date = LocalDate.now();
+        this.date = Timestamp.now();
     }
 
     public Transaction(int quantity, boolean isInCome, String userId, String accountId) {
         this.quantity = quantity;
         this.isInCome = isInCome;
         this.userId = userId;
-        this.date = LocalDate.now();
+        this.date = Timestamp.now();
         this.accountId = accountId;
     }
 
-    public Transaction(int quantity, boolean isInCome, LocalDate date, String userId) {
+
+    public Transaction(int quantity, boolean isInCome, Timestamp date, String userId) {
         this.quantity = quantity;
         this.isInCome = isInCome;
         this.date = date;
         this.userId = userId;
     }
 
-    public Transaction(int quantity, boolean isInCome, LocalDate date, String userId, String accountId) {
+    public Transaction(int quantity, boolean isInCome, Timestamp date, String userId, String accountId) {
         this.quantity = quantity;
         this.isInCome = isInCome;
         this.date = date;
@@ -52,7 +57,17 @@ public class Transaction implements Serializable {
     }
 
 
-    public int getQuantity() {
+    public Transaction(int quantity, boolean isInCome, String userId, String categoryId, String accountId) {
+        this.quantity = quantity;
+        this.isInCome = isInCome;
+        this.userId = userId;
+        this.date = Timestamp.now();
+        this.categoryId = categoryId;
+        this.accountId = accountId;
+    }
+
+
+    public float getQuantity() {
         return quantity;
     }
 
@@ -62,12 +77,12 @@ public class Transaction implements Serializable {
     }
 
 
-    public LocalDate getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(float quantity) {
         this.quantity = quantity;
     }
 
@@ -77,7 +92,7 @@ public class Transaction implements Serializable {
     }
 
 
-    public void setDate(LocalDate date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
@@ -95,6 +110,19 @@ public class Transaction implements Serializable {
         this.accountId = accountId;
     }
 
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
 
     @Override
     public String toString() {
@@ -104,7 +132,7 @@ public class Transaction implements Serializable {
                 ", date=" + date +
                 ", userId='" + userId + '\'' +
                 ", accountId='" + accountId + '\'' +
+                ", categoryId='" + categoryId + '\'' +
                 '}';
     }
-
 }
