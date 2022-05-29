@@ -3,16 +3,26 @@ package tfg.jsemp.moneysaver.ui;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.ArrayMap;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import tfg.jsemp.moneysaver.R;
+import tfg.jsemp.moneysaver.adapter.CategoryAdapter;
+import tfg.jsemp.moneysaver.model.Category;
+import tfg.jsemp.moneysaver.model.CtWrapper;
 import tfg.jsemp.moneysaver.model.Transaction;
 import tfg.jsemp.moneysaver.model.User;
 import tfg.jsemp.moneysaver.utils.ConstantsUtil;
@@ -40,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         initViews();
         onChangeActivity();
+        final CategoryAdapter categoryAdapter = new CategoryAdapter(this);
+        setRecyclerView(categoryAdapter);
     }
 
 
@@ -70,12 +82,44 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void setRecyclerView(CategoryAdapter adapter) {
+        Map<String, List<Transaction>> transactionsByCategoryId = new ArrayMap<>();
+
+        FirestoreUtil.getTransactions().observe( this, new Observer<List<Transaction>>() {
+            @Override
+            public void onChanged(List<Transaction> transactions) {
+                for (Transaction t : transactions) {
+                    if (!transactionsByCategoryId.containsKey(t.getCategoryId())) {
+                        transactionsByCategoryId.put(t.getCategoryId(), new ArrayList<>());
+                    }
+                    transactionsByCategoryId.get(t.getCategoryId()).add(t);
+                }
+                FirestoreUtil.getCategories().observe(MainActivity.this, new Observer<List<Category>>() {
+                    @Override
+                    public void onChanged(List<Category> categories) {
+                        System.out.println(transactionsByCategoryId);
+                        List<CtWrapper> ctWrappers = new ArrayList<>();
+                        for (Category c: categories) {
+                            List<Transaction> transactions = transactionsByCategoryId.get(c.getCategoryId());
+                            ctWrappers.add(new CtWrapper(c, transactions));
+                        }
+                        System.out.println(ctWrappers);
+                        rvCategories.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                        rvCategories.setAdapter(adapter);
+                        adapter.setCategories(ctWrappers);
+                    }
+                });
+            }
+
+        });
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_CANCELED){
-            Transaction transaction;
-            //TODO transaction = (Transaction) data.getParcelableExtra(//add extra on constants);
+            Transaction transaction = (Transaction) data.getParcelableExtra(ConstantsUtil.ConstantsTransaction.NEW_TRANSACTION);
             switch (requestCode){
                 case ConstantsUtil.ConstantsTransaction.OPTION_REQUEST_NEW_TRANSACTION:
                    //TODO addTransaction(transaction);

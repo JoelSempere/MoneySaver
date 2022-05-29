@@ -12,6 +12,7 @@ import tfg.jsemp.moneysaver.R
 import tfg.jsemp.moneysaver.model.Account
 import tfg.jsemp.moneysaver.model.Category
 import tfg.jsemp.moneysaver.model.Transaction
+import tfg.jsemp.moneysaver.utils.ConstantsUtil
 import tfg.jsemp.moneysaver.utils.FirestoreUtil
 
 class CreateTransaction : AppCompatActivity() {
@@ -96,6 +97,7 @@ class CreateTransaction : AppCompatActivity() {
             transaction.categoryId,
             transaction
         )
+        intent.putExtra(ConstantsUtil.ConstantsTransaction.NEW_TRANSACTION, transaction)
         finish()
     }
 

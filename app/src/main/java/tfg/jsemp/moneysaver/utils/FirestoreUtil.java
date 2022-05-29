@@ -153,6 +153,20 @@ public class FirestoreUtil {
         return categories;
     }
 
+
+    public static MutableLiveData<List<Transaction>> getTransactionsByCategoryId(String categoryId) {
+        MutableLiveData<List<Transaction>> transactions = new MutableLiveData<>();
+        Query query = db.collectionGroup("Transactions")
+                .whereEqualTo("categoryId", categoryId);
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                transactions.setValue(task.getResult().toObjects(Transaction.class));
+            }
+        });
+        return transactions;
+    }
+
     /***Devuelve la Id de cualquier documento almacenado en firestore***/
     public static MutableLiveData<String> getIdByName(String name, String collection) {
         MutableLiveData<String> objId = new MutableLiveData<>();
@@ -169,11 +183,22 @@ public class FirestoreUtil {
         return objId;
     }
 
-    //TODO pendiente de testear 29-05
     public static void setTransactionsIntoCategories(String categoryId, Transaction transaction) {
         db.collection("Categories").document(categoryId)
                 .collection("Transactions").document()
                 .set(transaction);
+    }
+
+
+    public static MutableLiveData<List<Transaction>> getTransactions() {
+        MutableLiveData<List<Transaction>> transactions = new MutableLiveData<>();
+        db.collectionGroup("Transactions").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                transactions.setValue(task.getResult().toObjects(Transaction.class));
+            }
+        });
+        return transactions;
     }
 
 }

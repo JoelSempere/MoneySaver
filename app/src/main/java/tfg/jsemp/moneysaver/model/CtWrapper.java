@@ -15,6 +15,13 @@ public class CtWrapper implements Serializable {
         this.transactions = transactions;
     }
 
+
+    public CtWrapper(Category category) {
+        this.category = category;
+
+    }
+
+
     public Category getCategory() {
         return category;
     }
@@ -30,4 +37,5 @@ public class CtWrapper implements Serializable {
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
+
 }

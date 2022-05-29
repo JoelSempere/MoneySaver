@@ -46,7 +46,6 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
     public void onBindViewHolder(@NonNull WalletAdapter.WalletViewHolder holder, int position) {
         if(mAccounts != null) {
             final Account acc = mAccounts.get(position);
-            System.out.println(acc);
             holder.tvWalletName.setText(acc.getName());
             holder.tvQuantity.setText(acc.getTotal() + " €");
         }

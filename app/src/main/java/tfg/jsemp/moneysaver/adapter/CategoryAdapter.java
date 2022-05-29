@@ -14,13 +14,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import tfg.jsemp.moneysaver.R;
+import tfg.jsemp.moneysaver.model.Category;
 import tfg.jsemp.moneysaver.model.CtWrapper;
-import tfg.jsemp.moneysaver.model.Transaction;
+import tfg.jsemp.moneysaver.utils.FirestoreUtil;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
-    private RecyclerView.RecycledViewPool viewPool = new RecyclerView
-            .RecycledViewPool();
+    private RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
     private List<CtWrapper> mCategoriesWrapper;
     private final LayoutInflater mInflater;
 
@@ -33,35 +33,38 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     @NonNull
     @Override
     public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.item_transaction, parent, false);
+        View itemView = mInflater.inflate(R.layout.item_category, parent, false);
         return new CategoryViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CategoryAdapter.CategoryViewHolder holder, int position) {
         if(mCategoriesWrapper != null) {
             CtWrapper categoryWrapper = mCategoriesWrapper.get(position);
             //TODO set image
+            System.out.println(holder);
             holder.tvSaldo.setText(
-                    (categoryWrapper.getCategory().getIncome() - categoryWrapper.getCategory().getExpense()) + " €"
+                   (categoryWrapper.getCategory().getIncome() - categoryWrapper.getCategory().getExpense()) + " €"
             );
             holder.tvCategory.setText(categoryWrapper.getCategory().getName());
             //****NESTED RECYCLER VIEW****//
-           LinearLayoutManager layoutManager = new LinearLayoutManager(
-                    holder.rvTransaction.getContext(),
-                   LinearLayoutManager.VERTICAL, false
-            );
-           layoutManager.setInitialPrefetchItemCount(
-                   categoryWrapper.getTransactions().size()
-           );
+            if (categoryWrapper.getTransactions() != null) {
+                LinearLayoutManager layoutManager = new LinearLayoutManager(
+                        holder.rvTransaction.getContext(),
+                        LinearLayoutManager.VERTICAL, false
+                );
+                layoutManager.setInitialPrefetchItemCount(
+                        categoryWrapper.getTransactions().size()
+                );
 
-           TransactionAdapter transactionAdapter = new TransactionAdapter(
-                   categoryWrapper.getTransactions()
-           );
-           //****ASIGNACION DEL HIJO EN EL PADRE****//
-           holder.rvTransaction.setLayoutManager(layoutManager);
-           holder.rvTransaction.setAdapter(transactionAdapter);
-           holder.rvTransaction.setRecycledViewPool(viewPool);
+                TransactionAdapter transactionAdapter = new TransactionAdapter(
+                        categoryWrapper.getTransactions()
+                );
+                //****ASIGNACION DEL HIJO EN EL PADRE****//
+                holder.rvTransaction.setLayoutManager(layoutManager);
+                holder.rvTransaction.setAdapter(transactionAdapter);
+                holder.rvTransaction.setRecycledViewPool(viewPool);
+            }
         }
     }
 
@@ -81,8 +84,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     }
 
     public class CategoryViewHolder extends RecyclerView.ViewHolder {
-        private RecyclerView rvTransaction;
-        private ImageView ivCategory;
+       private RecyclerView rvTransaction;
+       private ImageView ivCategory;
         private TextView tvCategory;
         private TextView tvSaldo;
 
@@ -94,8 +97,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         private void iniciaViews() {
             this.rvTransaction = itemView.findViewById(R.id.rvTransactions);
             this.ivCategory = itemView.findViewById(R.id.ivCategory);
-            this.tvCategory = itemView.findViewById(R.id.tvCategory);
-            this.tvSaldo = itemView.findViewById(R.id.tvSaldo);
+            this.tvCategory = (TextView) itemView.findViewById(R.id.tvCategoryRV);
+            this.tvSaldo = (TextView) itemView.findViewById(R.id.tvSaldoCategory);
         }
 
 
