@@ -14,8 +14,13 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.type.DateTime;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -76,9 +81,40 @@ public class MainActivity extends AppCompatActivity {
 
         fabAddTransaction.setOnClickListener( c -> {
             intent = new Intent(MainActivity.this, CreateTransaction.class);
-            startActivityForResult(intent,
-                    ConstantsUtil.ConstantsTransaction.OPTION_REQUEST_NEW_TRANSACTION);
+            startActivity(intent);
+            finish();
         });
+    }
+
+
+    private void loadPanel(CategoryAdapter adapter) {
+        Date date = Calendar.getInstance().getTime();
+        DateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
+        tvMonth.setText(formatter.format(date));
+        loadMoney(adapter);
+    }
+
+    /**Recupera el valor economico de las transacciones*/
+    private void loadMoney(CategoryAdapter adapter) {
+        float ingreso = 0;
+        float gasto = 0;
+        List<CtWrapper> categoriesWrapper = adapter.getCategoryWrapperList();
+        for (CtWrapper cw: categoriesWrapper) {
+            if (cw.getTransactions() != null) {
+                for (Transaction t: cw.getTransactions()) {
+                    System.out.println(t);
+                    if(t.isInCome()) {
+                        ingreso += t.getQuantity();
+                    }
+                    else {
+                        gasto += t.getQuantity();
+                    }
+                }
+            }
+        }
+        tvQttyGasto.setText(String.valueOf(gasto) + " €");
+        tvQttyIngreso.setText(String.valueOf(ingreso) + " €");
+        tvQttySaldo.setText(String.valueOf(ingreso - gasto)+ " €");
     }
 
 
@@ -103,29 +139,15 @@ public class MainActivity extends AppCompatActivity {
                             List<Transaction> transactions = transactionsByCategoryId.get(c.getCategoryId());
                             ctWrappers.add(new CtWrapper(c, transactions));
                         }
-                        System.out.println(ctWrappers);
                         rvCategories.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         rvCategories.setAdapter(adapter);
                         adapter.setCategories(ctWrappers);
+                        loadPanel(adapter); //Carga el panel superior de la main activity
                     }
                 });
-            }
 
+            }
         });
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode != RESULT_CANCELED){
-            Transaction transaction = (Transaction) data.getParcelableExtra(ConstantsUtil.ConstantsTransaction.NEW_TRANSACTION);
-            switch (requestCode){
-                case ConstantsUtil.ConstantsTransaction.OPTION_REQUEST_NEW_TRANSACTION:
-                   //TODO addTransaction(transaction);
-                    break;
-            }
-        }
     }
 
 

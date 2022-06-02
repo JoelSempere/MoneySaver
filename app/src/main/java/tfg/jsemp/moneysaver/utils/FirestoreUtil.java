@@ -1,15 +1,12 @@
 package tfg.jsemp.moneysaver.utils;
 
-import android.app.Application;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,7 +20,6 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import tfg.jsemp.moneysaver.model.Account;
@@ -134,11 +130,45 @@ public class FirestoreUtil {
         return accounts;
     }
 
+
+    public static void setNewAccountValue(String id, float val) {
+        db.collection("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid()+ "/Economy/")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                for(DocumentChange doc : value.getDocumentChanges()){
+                    if (doc.getType() == DocumentChange.Type.ADDED) {
+                        Log.d("SubBrands Name: ", doc.getDocument().getId());
+
+                        updateAccountValue(doc, id, val);
+                    }
+                }
+            }
+        });
+    }
+
     public static void setAccounts(DocumentChange doc, String id, String name) {
         db.collection("Users").document(id)
                 .collection("Economy").document(doc.getDocument().getId())
                 .collection("Accounts").document()
                 .set(new Account(id, name, 0));
+    }
+
+    private static void updateAccountValue(DocumentChange doc, String id , float value) {
+        db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .collection("Economy").document(doc.getDocument().getId())
+                .collection("Accounts").document(id)
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                   @Override
+                   public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                       float oldTotal = task.getResult().toObject(Account.class).getTotal();
+                       db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                               .collection("Economy").document(doc.getDocument().getId())
+                               .collection("Accounts").document(id)
+                               .update("total", oldTotal + value);
+
+                   }
+               });
     }
 
 
@@ -183,6 +213,23 @@ public class FirestoreUtil {
         return objId;
     }
 
+    /***Por como esta en la coleccion tiene que ser una busqueda más especifica***/
+    public static MutableLiveData<String> getAccountIdByName(String name, String collection) {
+        MutableLiveData<String> objId = new MutableLiveData<>();
+        Query query = db.collectionGroup(collection)
+                .whereEqualTo("name", name)
+                .whereEqualTo("userId", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for(QueryDocumentSnapshot doc : task.getResult()) {
+                    objId.setValue(doc.getId());
+                }
+            }
+        });
+        return objId;
+    }
+
     public static void setTransactionsIntoCategories(String categoryId, Transaction transaction) {
         db.collection("Categories").document(categoryId)
                 .collection("Transactions").document()
@@ -200,5 +247,4 @@ public class FirestoreUtil {
         });
         return transactions;
     }
-
 }

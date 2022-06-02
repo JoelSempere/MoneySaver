@@ -63,7 +63,7 @@ public class WalletActivity extends AppCompatActivity {
         adapter.setOnClickListener(new WalletAdapter.onItemClickListener() {
             @Override
             public void onItemClick(Account account) {
-                //TODO Editar cantidad total, System.out.println(account);
+                //TODO podría darsele alguna funcionalidad
             }
         });
     }

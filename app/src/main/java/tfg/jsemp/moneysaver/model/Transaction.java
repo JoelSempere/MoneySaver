@@ -25,14 +25,14 @@ public class Transaction implements Serializable {
     }
 
 
-    public Transaction(int quantity, boolean isInCome, String userId) {
+    public Transaction(float quantity, boolean isInCome, String userId) {
         this.quantity = quantity;
         this.isInCome = isInCome;
         this.userId = userId;
         this.date = Timestamp.now();
     }
 
-    public Transaction(int quantity, boolean isInCome, String userId, String accountId) {
+    public Transaction(float quantity, boolean isInCome, String userId, String accountId) {
         this.quantity = quantity;
         this.isInCome = isInCome;
         this.userId = userId;
@@ -41,14 +41,14 @@ public class Transaction implements Serializable {
     }
 
 
-    public Transaction(int quantity, boolean isInCome, Timestamp date, String userId) {
+    public Transaction(float quantity, boolean isInCome, Timestamp date, String userId) {
         this.quantity = quantity;
         this.isInCome = isInCome;
         this.date = date;
         this.userId = userId;
     }
 
-    public Transaction(int quantity, boolean isInCome, Timestamp date, String userId, String accountId) {
+    public Transaction(float quantity, boolean isInCome, Timestamp date, String userId, String accountId) {
         this.quantity = quantity;
         this.isInCome = isInCome;
         this.date = date;
@@ -57,7 +57,7 @@ public class Transaction implements Serializable {
     }
 
 
-    public Transaction(int quantity, boolean isInCome, String userId, String categoryId, String accountId) {
+    public Transaction(float quantity, boolean isInCome, String userId, String categoryId, String accountId) {
         this.quantity = quantity;
         this.isInCome = isInCome;
         this.userId = userId;

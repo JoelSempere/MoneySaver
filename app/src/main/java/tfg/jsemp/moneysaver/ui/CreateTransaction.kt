@@ -1,5 +1,6 @@
 package tfg.jsemp.moneysaver.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.widget.ArrayAdapter
@@ -79,7 +80,7 @@ class CreateTransaction : AppCompatActivity() {
                 transaction.isInCome = swIsInCome.isChecked
                 FirestoreUtil.getIdByName(spCategory.selectedItem.toString(), "Categories").observe(this){ ctgId ->
                     transaction.categoryId = ctgId.toString()
-                    FirestoreUtil.getIdByName(spWallet.selectedItem.toString(), "Accounts").observe(this){ accId ->
+                    FirestoreUtil.getAccountIdByName(spWallet.selectedItem.toString(), "Accounts").observe(this){ accId ->
                         transaction.accountId = accId.toString()
                         if(canSaveRecord) {
                             setNewTransaction(transaction)
@@ -97,7 +98,13 @@ class CreateTransaction : AppCompatActivity() {
             transaction.categoryId,
             transaction
         )
-        intent.putExtra(ConstantsUtil.ConstantsTransaction.NEW_TRANSACTION, transaction)
+        var qtty : Float = if (transaction.isInCome) {
+            transaction.quantity
+        } else {
+            -(transaction.quantity)
+        }
+        FirestoreUtil.setNewAccountValue(transaction.accountId, qtty)
+        startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 

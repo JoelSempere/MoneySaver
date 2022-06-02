@@ -21,6 +21,10 @@ public class CtWrapper implements Serializable {
 
     }
 
+    public CtWrapper() {
+
+    }
+
 
     public Category getCategory() {
         return category;

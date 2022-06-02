@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/llTransactionItem"
@@ -7,54 +7,52 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="4dp"
     android:layout_marginVertical="2dp"
-    android:orientation="vertical">
+    android:background="@color/accent"
+    android:orientation="vertical"
+    app:cardBackgroundColor="@color/accent"
+    app:cardCornerRadius="8dp"
+    app:circularflow_radiusInDP="5dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cvTransactionItem"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        app:cardBackgroundColor="@color/accent"
-        app:cardCornerRadius="60dp"
-        app:cardElevation="40dp">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tvCont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="@+id/ivIsInCome"
+            app:layout_constraintStart_toEndOf="@+id/ivIsInCome"
+            app:layout_constraintTop_toTopOf="@+id/ivIsInCome"
+            tools:text="100" />
 
-            <TextView
-                android:id="@+id/tvCont"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:textAlignment="center"
-                app:layout_constraintBottom_toBottomOf="@+id/ivIsInCome"
-                app:layout_constraintStart_toEndOf="@+id/ivIsInCome"
-                app:layout_constraintTop_toTopOf="@+id/ivIsInCome"
-                tools:text="100" />
+        <TextView
+            android:id="@+id/tvTransactionQuantity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:textAlignment="viewEnd"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvCont"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1000 €" />
 
-            <TextView
-                android:id="@+id/tvTransactionQuantity"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:textAlignment="viewEnd"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tvCont"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="1000 €" />
+        <ImageView
+            android:id="@+id/ivIsInCome"
+            android:layout_width="18dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/fui_ic_check_circle_black_128dp" />
 
-            <ImageView
-                android:id="@+id/ivIsInCome"
-                android:layout_width="18dp"
-                android:layout_height="0dp"
-                android:layout_marginLeft="6dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/fui_ic_check_circle_black_128dp" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-</LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

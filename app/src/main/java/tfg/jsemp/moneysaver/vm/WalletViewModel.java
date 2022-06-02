@@ -17,6 +17,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.List;
 
 import tfg.jsemp.moneysaver.model.Account;
+import tfg.jsemp.moneysaver.model.Transaction;
 import tfg.jsemp.moneysaver.utils.FirestoreUtil;
 
 public class WalletViewModel extends AndroidViewModel {
@@ -32,4 +33,5 @@ public class WalletViewModel extends AndroidViewModel {
     public MutableLiveData<List<Account>> getAccounts() {
         return FirestoreUtil.getAccounts(firebaseAuth.getCurrentUser().getUid());
     }
+
 }

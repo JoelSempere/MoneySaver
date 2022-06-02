@@ -35,7 +35,7 @@ public class Category implements Serializable {
     }
 
 
-    public Category(String name, int income, int expense){
+    public Category(String name, float income, float expense){
         this.name = name;
         this.income = income;
         this.expense = expense;
@@ -43,7 +43,7 @@ public class Category implements Serializable {
     }
 
 
-    public Category(String name, String image, int income, int expense){
+    public Category(String name, String image, float income, float expense){
         this.name = name;
         this.image = image;
         this.income = income;
@@ -82,12 +82,12 @@ public class Category implements Serializable {
     }
 
 
-    public void setIncome(int income) {
+    public void setIncome(float income) {
         this.income = income;
     }
 
 
-    public void setExpense(int expense) {
+    public void setExpense(float expense) {
         this.expense = expense;
     }
 

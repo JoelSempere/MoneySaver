@@ -11,11 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import tfg.jsemp.moneysaver.R;
 import tfg.jsemp.moneysaver.model.Category;
 import tfg.jsemp.moneysaver.model.CtWrapper;
+import tfg.jsemp.moneysaver.model.Transaction;
 import tfg.jsemp.moneysaver.utils.FirestoreUtil;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
@@ -42,13 +45,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         if(mCategoriesWrapper != null) {
             CtWrapper categoryWrapper = mCategoriesWrapper.get(position);
             //TODO set image
-            System.out.println(holder);
-            holder.tvSaldo.setText(
-                   (categoryWrapper.getCategory().getIncome() - categoryWrapper.getCategory().getExpense()) + " €"
-            );
             holder.tvCategory.setText(categoryWrapper.getCategory().getName());
             //****NESTED RECYCLER VIEW****//
             if (categoryWrapper.getTransactions() != null) {
+                holder.tvSaldo.setText(
+                    calculateEarning(mCategoriesWrapper.get(position).getTransactions()) + "€"
+                );
                 LinearLayoutManager layoutManager = new LinearLayoutManager(
                         holder.rvTransaction.getContext(),
                         LinearLayoutManager.VERTICAL, false
@@ -66,6 +68,36 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 holder.rvTransaction.setRecycledViewPool(viewPool);
             }
         }
+    }
+
+    private String calculateEarning(List<Transaction> transactions) {
+        DecimalFormat df = new DecimalFormat("0.##");
+        float value = 0;
+        for (Transaction t : transactions) {
+            if(t.isInCome()) {
+                value += t.getQuantity();
+            }
+            else {
+                value -= t.getQuantity();
+            }
+        }
+        return String.valueOf(df.format(value));
+    }
+
+    public List<CtWrapper> getCategoryWrapperList() {
+        List<CtWrapper> categoryList = new ArrayList<>();
+        for (int i = 0; i < getItemCount(); i++) {
+            categoryList.add(getItem(i));
+        }
+        return categoryList;
+    }
+
+    private CtWrapper getItem(int position) {
+        CtWrapper category = new CtWrapper();
+        if(mCategoriesWrapper != null) {
+            category = mCategoriesWrapper.get(position);
+        }
+        return category;
     }
 
     @Override

@@ -6,9 +6,9 @@ import java.math.BigDecimal;
 public class Account implements Serializable {
 
     private String name;
-    private String categoryId;
+    private String accountId;
     private String userId;
-    private int total;
+    private float total;
 
 
     public Account(){
@@ -23,14 +23,14 @@ public class Account implements Serializable {
     }
 
 
-    public Account(String userId, String name, int total){
+    public Account(String userId, String name, float total){
         this.userId = userId;
         this.name = name;
         this.total = total;
     }
 
-    public Account(String categoryId, String userId, String name, int total){
-        this.categoryId = categoryId;
+    public Account(String accountId, String userId, String name, float total){
+        this.accountId = accountId;
         this.userId = userId;
         this.name = name;
         this.total = total;
@@ -42,12 +42,12 @@ public class Account implements Serializable {
     }
 
 
-    public int getTotal() {
+    public float getTotal() {
         return total;
     }
 
 
-    public void setTotal(int total) {
+    public void setTotal(float total) {
         this.total = total;
     }
 
@@ -61,12 +61,12 @@ public class Account implements Serializable {
         this.name = name;
     }
 
-    public String getCategoryId() {
-        return categoryId;
+    public String getAccountId() {
+        return accountId;
     }
 
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
+    public void setAccountId(String categoryId) {
+        this.accountId = accountId;
     }
 
     public void setUserId(String userId) {
