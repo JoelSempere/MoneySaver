@@ -21,6 +21,7 @@ class CreateTransaction : AppCompatActivity() {
     private lateinit var accountsAdapter : ArrayAdapter<CharSequence>
     private lateinit var categoriesAdapter : ArrayAdapter<CharSequence>
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_transaction)
@@ -37,6 +38,7 @@ class CreateTransaction : AppCompatActivity() {
         return true
     }
 
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.item_close -> {
@@ -46,35 +48,6 @@ class CreateTransaction : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-
-    //***POSPUESTO: No utilizable porque el spinner no llega a asignar correctamente los items en el selected***//
-    private fun getAccountsData(): MutableList<String> {
-        var accountsText : MutableList<String> = mutableListOf<String>()
-        var accounts : List<Account>? = null
-        FirestoreUtil.getAccounts(firebaseAuth.currentUser!!.uid).observe(this) { accs ->
-            accounts = accs
-            accounts?.forEach {
-                accountsText.add(it.name)
-            }
-        }
-
-        return accountsText
-    }
-
-
-    //***POSPUESTO: No utilizable porque el spinner no llega a asignar correctamente los items en el selected***//
-    private fun getCategoriesData(): MutableList<String> {
-        var categoriesText : MutableList<String> = mutableListOf<String>()
-        var categories : List<Category>? = null
-        FirestoreUtil.getCategories().observe(this) { cts ->
-            categories = cts
-            categories?.forEach{
-                categoriesText.add(it.name)
-            }
-        }
-        return categoriesText
     }
 
 
@@ -88,6 +61,7 @@ class CreateTransaction : AppCompatActivity() {
     }
 
 
+    /**Comprueba que se puede guardar la transacción y recupera los datos necesarios de firestore para ello**/
     private fun onSaveTransaction(transaction: Transaction){
         var canSaveRecord = true
         fabSaveTransaction.setOnClickListener {
@@ -107,9 +81,9 @@ class CreateTransaction : AppCompatActivity() {
                 }
             }
         }
-
     }
 
+    /**Guarda la transacción**/
     private fun setNewTransaction(transaction: Transaction) {
         FirestoreUtil.setTransactionsIntoCategories(
             transaction.categoryId,
@@ -126,10 +100,11 @@ class CreateTransaction : AppCompatActivity() {
     }
 
 
+    /**Devuelve aviso en caso de no poder guardarse la transacción**/
     private fun checkFields() : Boolean {
         var isSaveable = true
         if(tfCantidad.editText!!.text.isEmpty())  {
-            Toast.makeText(this, "No es posible guardar una transacción sin cantidad asignada", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.msg_error_save_transaction), Toast.LENGTH_SHORT).show()
             isSaveable = false
         }
         return isSaveable

@@ -22,23 +22,30 @@ import java.lang.Exception
 class LoginActivity : AppCompatActivity() {
     lateinit var googleSignInClient : GoogleSignInClient
     lateinit var firebaseAuth: FirebaseAuth
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         firebaseAuth = FirebaseAuth.getInstance()
-        val gImage = getDrawable(R.mipmap.google) //Unica manera de insertar la imagen en un button basico
-        btnGoogle.setCompoundDrawablesWithIntrinsicBounds(gImage,null,null,null)
+        insertImages()
         iniciarApp()
     }
 
 
-    //***CONTROL DE ERRORES REGISTRO***//
+    private fun insertImages() {
+        val gImage = getDrawable(R.mipmap.google)
+        btnGoogle.setCompoundDrawablesWithIntrinsicBounds(gImage,null,null,null)
+    }
+
+
+    /**CONTROL DE ERRORES REGISTRO**/
     private fun getErrorSignIn() {
         Toast.makeText(this, getString(R.string.msg_ukn_err), Toast.LENGTH_LONG).show()
     }
 
 
-    //***INICIO DE SESION INTENT***//
+    /**INICIO DE SESION INTENT**/
     private fun createLoginIntent(email: String) {
         val signInIntent = Intent(this, MainActivity::class.java)
             .apply {
@@ -55,48 +62,47 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-    //***COMPRUEBA CONTENIDO EN LOS EDIT TEXT***//
+    /**COMPRUEBA CONTENIDO EN LOS EDIT TEXT**/
     private fun checkFieldsLogin(): Boolean {
      return (etEmail.text.isNotEmpty() && etPassword.text.isNotEmpty())
     }
 
 
-    //***GOOGLE OPTIONS***//
+    /**GOOGLE OPTIONS**/
     private fun googleSignInRequest(): GoogleSignInOptions {
         return GoogleSignInOptions
             .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("74949683138-kmh37unjkp75vfkgio3g7j13nl8v7lph.apps.googleusercontent.com")
+            .requestIdToken(getString(R.string.token))
             .requestEmail()
             .build()
     }
 
-    //***SIGN IN CON GOOGLE EN FIREBASE***//
+
+    /**SIGN IN CON GOOGLE EN FIREBASE**/
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
         val credential = GoogleAuthProvider.getCredential(account!!.idToken, null)
-        firebaseAuth.signInWithCredential(credential).addOnCompleteListener{
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
             if(it.isSuccessful) {
-                FirestoreUtil.getUserinfo(firebaseAuth).observe(this){ //Controlamos si el usuario ya existe (Evitar duplicidad de cuentas y economias)
+                FirestoreUtil.getUserinfo(firebaseAuth).observe(this) { //Controlamos si el usuario ya existe (Evitar duplicidad de cuentas y economias)
                     createLoginIntent(
                         firebaseAuth.currentUser!!.email.toString())
-                    println( "EMAIL:" + firebaseAuth.currentUser!!.email.toString())
                     finish()
                 }
-
             }
             else {
-                //TODO
-                println("Error en firebaseAuth")
+                Toast.makeText(this, getString(R.string.msg_err_fireauth), Toast.LENGTH_SHORT).show()
             }
         }
 
     }
 
 
-    //***ACCIONES DE LOS CLICKS PARA INICIAR APP***//
+    /**ACCIONES DE LOS CLICKS PARA INICIAR APP**/
     private fun iniciarApp() {
         btnSignIn.setOnClickListener {
             createSingInIntent()
         }
+
         btnLogin.setOnClickListener {
             if (checkFieldsLogin()) {
                 firebaseAuth = FirebaseAuth.getInstance()
@@ -114,6 +120,7 @@ class LoginActivity : AppCompatActivity() {
                     }
             }
         }
+
         btnGoogle.setOnClickListener{
             googleSignInClient = GoogleSignIn.getClient(this, googleSignInRequest())
             intent = googleSignInClient.signInIntent
@@ -131,14 +138,11 @@ class LoginActivity : AppCompatActivity() {
                     if(accountTask.result != null){
                         firebaseAuthWithGoogle(accountTask.getResult(ApiException::class.java))
                     }
-
-
                 }catch (ex: Exception){
                     ex.cause
                 }
             }
         }
     }
-
 
 }

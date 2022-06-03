@@ -1,12 +1,16 @@
 <resources>
     <string name="app_name">Money Saver</string>
-    <string name="msg_ukn_err">Error desconocido al autenticarse, por favor intentelo de nuevo más tarde</string>
+    <string name="msg_ukn_err">Error al autenticarse, por favor intentelo de nuevo</string>
     <string name="wrn_sign_in">¿Aún no estás registrado?</string>
     <string name="hint_password">Contraseña</string>
     <string name="hint_password2">Repite la Contraseña</string>
     <string name="sign_in">Registrarse</string>
     <string name="login">Acceder</string>
     <string name="google">Acceder con Google</string>
+    <string name="msg_error_save_transaction">No es posible guardar una transacción sin cantidad asignada</string>
+    <string name="token">74949683138-kmh37unjkp75vfkgio3g7j13nl8v7lph.apps.googleusercontent.com</string>
+    <string name="msg_err_fireauth">Error en firebaseAuth</string>
+    <string name="format_pattern_1">dd MMM yyyy</string>
 
 
 </resources>

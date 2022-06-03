@@ -58,12 +58,11 @@ public class WalletActivity extends AppCompatActivity {
     }
 
 
-
+    /**Actua sobre cada item clicado : No se le ha dado funcionalidad**/
     private void onClickItem(WalletAdapter adapter) {
         adapter.setOnClickListener(new WalletAdapter.onItemClickListener() {
             @Override
             public void onItemClick(Account account) {
-                //TODO podría darsele alguna funcionalidad
             }
         });
     }
@@ -71,16 +70,14 @@ public class WalletActivity extends AppCompatActivity {
 
     private void onChangeActivity() {
         btnProfile.setOnClickListener(c-> {
-            FirestoreUtil.getUserinfo(firebaseAuth).observe(this, new Observer<User>() {
-                @Override
-                public void onChanged(User user) {
-                    intent = new Intent(WalletActivity.this, ProfileActivity.class);
-                    intent.putExtra(ConstantsUtil.ConstantsLogin.CURRENT_USER, user);
-                    startActivity(intent);
-                    finish();
-                }
+            FirestoreUtil.getUserinfo(firebaseAuth).observe(this, user -> {
+                intent = new Intent(WalletActivity.this, ProfileActivity.class);
+                intent.putExtra(ConstantsUtil.ConstantsLogin.CURRENT_USER, user);
+                startActivity(intent);
+                finish();
             });
         });
+
         btnMain.setOnClickListener(c-> {
             intent = new Intent(WalletActivity.this, MainActivity.class);
             startActivity(intent);

@@ -12,6 +12,8 @@ import tfg.jsemp.moneysaver.utils.FirestoreUtil
 
 class ProfileActivity : AppCompatActivity() {
     lateinit var currentUser : User
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
@@ -30,6 +32,7 @@ class ProfileActivity : AppCompatActivity() {
             finish()
         }
     }
+
 
     private fun setUserInfo() {
         currentUser = (intent.getSerializableExtra(ConstantsUtil.ConstantsLogin.CURRENT_USER) as? User)!!
@@ -59,7 +62,6 @@ class ProfileActivity : AppCompatActivity() {
                     tietNewUsernameC.visibility = View.GONE
                     tilNewUsernameC.visibility = View.GONE
                     btnSaveChanges.visibility = View.INVISIBLE
-
                 }
             }
     }
@@ -76,6 +78,6 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-
     }
+
 }

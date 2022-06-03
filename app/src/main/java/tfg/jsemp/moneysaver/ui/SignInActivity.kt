@@ -22,13 +22,13 @@ class SignInActivity : AppCompatActivity() {
     }
 
 
-    //***CONTROL DE ERRORES REGISTRO***//
+    /**CONTROL DE ERRORES REGISTRO**/
     private fun getErrorSignIn(text : String) {
         Toast.makeText(this, getString(R.string.msg_ukn_err) + text , Toast.LENGTH_LONG).show()
     }
 
 
-    //***INICIO DE SESION INTENT***//
+    /**INICIO DE SESION INTENT**/
     private fun createLoginIntent() {
         val signInIntent = Intent(this, MainActivity::class.java)
             .apply {
@@ -38,13 +38,11 @@ class SignInActivity : AppCompatActivity() {
     }
 
 
-    //***COMPRUEBA CONTENIDO EN LOS EDIT TEXT***//
+    /**COMPRUEBA CONTENIDO EN LOS EDIT TEXT**/
     private fun comprobarCamposLogin(): Boolean {
         return (
-                etEmail.text.isNotEmpty() && etPassword.text.isNotEmpty() && etPassword2.text.isNotEmpty() &&
-                        (
-                                etPassword.text.toString() == etPassword2.text.toString()
-                                )
+                etEmail.text.isNotEmpty() && etPassword.text.isNotEmpty() && etPassword2.text.isNotEmpty()
+                        && (etPassword.text.toString() == etPassword2.text.toString())
                 )
     }
 
@@ -52,7 +50,6 @@ class SignInActivity : AppCompatActivity() {
     //***ACCION DE REGISTRO PARA INCIAR APP***//
     private fun iniciarApp() {
         btnSignIn.setOnClickListener {
-            println("@Joel: Comprobar Boolean - 17/04/22 - " + comprobarCamposLogin())
             if (comprobarCamposLogin()) {
                 firebaseAuth.createUserWithEmailAndPassword(
                         etEmail.text.toString(),
@@ -64,8 +61,7 @@ class SignInActivity : AppCompatActivity() {
 
                         } else {
                             FirestoreUtil.getUserinfo(firebaseAuth).observe( this) {
-                                   // FirestoreUtil.initUserInCollection(user)
-                                    createLoginIntent()
+                                createLoginIntent()
                             }
                         }
                     }
