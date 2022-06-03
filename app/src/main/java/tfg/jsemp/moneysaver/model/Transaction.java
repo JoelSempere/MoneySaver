@@ -110,6 +110,7 @@ public class Transaction implements Serializable {
         this.accountId = accountId;
     }
 
+
     public void setUserId(String userId) {
         this.userId = userId;
     }
@@ -118,6 +119,7 @@ public class Transaction implements Serializable {
     public String getCategoryId() {
         return categoryId;
     }
+
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;

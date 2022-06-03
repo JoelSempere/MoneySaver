@@ -19,9 +19,17 @@ class ProfileActivity : AppCompatActivity() {
         onEditAction()
         onSaveAction()
         onChangeActivity()
+        onLogout()
 
     }
 
+
+    private fun onLogout() {
+        ibLogout.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+    }
 
     private fun setUserInfo() {
         currentUser = (intent.getSerializableExtra(ConstantsUtil.ConstantsLogin.CURRENT_USER) as? User)!!
@@ -34,21 +42,22 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun onEditAction() {
         btnEdit.setOnClickListener {
-            etNewUsernameC.visibility = View.VISIBLE
+            tietNewUsernameC.visibility = View.VISIBLE
+            tilNewUsernameC.visibility = View.VISIBLE
+            tietNewUsernameC.setText(tvUsernameC.text)
             btnSaveChanges.visibility = View.VISIBLE
-           //TODO "Create button to change user profile image"
         }
     }
 
 
     private fun onSaveAction() {
             btnSaveChanges.setOnClickListener{
-                //TODO "Create button to change user profile image""update record"
-                if (currentUser.name != etNewUsernameC.text.toString()){
-                    currentUser.name = etNewUsernameC.text.toString()
+                if (currentUser.name != tietNewUsernameC.text.toString()){
+                    currentUser.name = tietNewUsernameC.text.toString()
                     FirestoreUtil.updateUserName(currentUser)
                     setUserInfo()
-                    etNewUsernameC.visibility = View.GONE
+                    tietNewUsernameC.visibility = View.GONE
+                    tilNewUsernameC.visibility = View.GONE
                     btnSaveChanges.visibility = View.INVISIBLE
 
                 }

@@ -12,11 +12,36 @@ class ConstantsUtil {
     }
 
 
-    object ConstantsTransaction {
-        const val OPTION_REQUEST_NEW_TRANSACTION = 1
+    object ConstantsFirestore {
         @kotlin.jvm.JvmField
-        var NEW_TRANSACTION = "tfg.jsemp.moneysaver.utils.NEW_TRANSACTION"
+        var USERS = "Users"
+        @kotlin.jvm.JvmField
+        var ACCOUNTS = "Accounts"
+        @kotlin.jvm.JvmField
+        var ECONOMY = "Economy"
+        @kotlin.jvm.JvmField
+        var CATEGORIES = "Categories"
+        @kotlin.jvm.JvmField
+        var TRANSACTIONS = "Transactions"
+
+
+        @kotlin.jvm.JvmField
+        var NAME = "name"
+        @kotlin.jvm.JvmField
+        var USER_ID = "userId"
+        @kotlin.jvm.JvmField
+        var TOTAL = "total"
+
+        @kotlin.jvm.JvmField
+        var WALLET_NAME_1 = "Principal"
+        @kotlin.jvm.JvmField
+        var WALLET_NAME_2 = "Secundaria"
+        @kotlin.jvm.JvmField
+        var MIN_VALUE = 0
     }
 
-
+    object ConstantsSimbols {
+        @kotlin.jvm.JvmField
+        var EURO = " €"
+    }
 }

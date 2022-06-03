@@ -80,15 +80,9 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
         }
 
 
-        public Account getDia(){ //nos devuelve el dia que muestra
+        public Account getDia(){
             return mAccounts.get(WalletViewHolder.this
                     .getAdapterPosition());
-        }
-
-
-        private void iniciaViews() {
-            this.tvWalletName = itemView.findViewById(R.id.tvWalletName);
-            this.tvQuantity = itemView.findViewById(R.id.tvQuantity);
         }
 
 
@@ -103,6 +97,11 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
             });
         }
 
+
+        private void iniciaViews() {
+            this.tvWalletName = itemView.findViewById(R.id.tvWalletName);
+            this.tvQuantity = itemView.findViewById(R.id.tvQuantity);
+        }
 
     }
 

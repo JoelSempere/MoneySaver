@@ -1,27 +1,22 @@
 package tfg.jsemp.moneysaver.ui;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.ArrayMap;
-import android.view.Menu;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.type.DateTime;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,12 +29,15 @@ import tfg.jsemp.moneysaver.model.Category;
 import tfg.jsemp.moneysaver.model.CtWrapper;
 import tfg.jsemp.moneysaver.model.Transaction;
 import tfg.jsemp.moneysaver.model.User;
+import tfg.jsemp.moneysaver.utils.AppUtils;
 import tfg.jsemp.moneysaver.utils.ConstantsUtil;
 import tfg.jsemp.moneysaver.utils.FirestoreUtil;
 
 public class MainActivity extends AppCompatActivity {
+    private int MONTH_CONT = 1;
     private FirebaseAuth firebaseAuth;
     private Intent intent;
+
     private ImageButton btnProfile;
     private ImageButton btnWallet;
     private FloatingActionButton fabAddTransaction;
@@ -51,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvQttyGasto;
     private TextView tvQttySaldo;
     private RecyclerView rvCategories;
+    private CardView cvInfoMain;
+    private ImageButton ibBackDate;
+    private ImageButton ibNextDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +59,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         firebaseAuth = FirebaseAuth.getInstance();
         initViews();
-        loadDate();
+        //loadDate();
         onChangeActivity();
         final CategoryAdapter categoryAdapter = new CategoryAdapter(this);
-        setRecyclerView(categoryAdapter);
+        setRecyclerView(categoryAdapter, new Date(), new Date());
+        onClickPanelButtons(categoryAdapter);
     }
 
 
@@ -91,9 +93,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
+    /**Recibe el contador del mes para devolver el mes de las transacciones devueltas*/
     private void loadDate() {
-        Date date = Calendar.getInstance().getTime();
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, (MONTH_CONT - 1));
+        Date date = cal.getTime();
         DateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
         tvMonth.setText(formatter.format(date));
     }
@@ -122,18 +126,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**Establece los objectos hijo en el Wrapper del padre e inicia el recycler view principal**/
-    private void setRecyclerView(CategoryAdapter adapter) {
-        Map<String, List<Transaction>> transactionsByCategoryId = new ArrayMap<>();
-
-        FirestoreUtil.getTransactions().observe( this, new Observer<List<Transaction>>() {
+    private void setRecyclerView(CategoryAdapter adapter, Date start, Date end) {
+        FirestoreUtil.getTransactions().observe( this, new Observer<List<Transaction>>() { //recibe las fechas para devolver las transacciones del mes, y el contador del mes para los botones
             @Override
             public void onChanged(List<Transaction> transactions) {
-                for (Transaction t : transactions) {
-                    if (!transactionsByCategoryId.containsKey(t.getCategoryId())) {
-                        transactionsByCategoryId.put(t.getCategoryId(), new ArrayList<>());
-                    }
-                    transactionsByCategoryId.get(t.getCategoryId()).add(t);
-                }
+                List<Transaction> filteredTransactions = AppUtils.getCurrentTransactions(transactions, start, end, MONTH_CONT);
+
+                Map<String, List<Transaction>> transactionsByCategoryId = AppUtils.fillTransactions(filteredTransactions); //Rellena el mapa con las transacciones
                 FirestoreUtil.getCategories().observe(MainActivity.this, new Observer<List<Category>>() {
                     @Override
                     public void onChanged(List<Category> categories) {
@@ -146,10 +145,25 @@ public class MainActivity extends AppCompatActivity {
                         rvCategories.setAdapter(adapter);
                         adapter.setCategories(ctWrappers);
                         loadMoney(adapter); //Carga el panel superior de la main activity
+                        loadDate(); //recargo la fecha del panel informativo
                     }
                 });
-
             }
+        });
+    }
+
+
+
+    private void onClickPanelButtons(CategoryAdapter adapter) {
+        Date start = new Date();
+        Date end = new Date();
+        ibNextDate.setOnClickListener( c-> {
+            ++ MONTH_CONT ;
+            setRecyclerView(adapter,start,end);
+        });
+        ibBackDate.setOnClickListener( c-> {
+            -- MONTH_CONT ;
+            setRecyclerView(adapter,start,end);
         });
     }
 
@@ -166,6 +180,9 @@ public class MainActivity extends AppCompatActivity {
         tvQttyGasto = findViewById(R.id.tvqttyGasto);
         tvQttySaldo = findViewById(R.id.tvqttySaldo);
         rvCategories = findViewById(R.id.rvCategoriesMain);
+        cvInfoMain = findViewById(R.id.cvInfoMain);
+        ibBackDate = findViewById(R.id.ibBackDate);
+        ibNextDate = findViewById(R.id.ibNextDate);
     }
 
 

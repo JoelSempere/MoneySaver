@@ -4,7 +4,8 @@ import android.os.Parcelable;
 
 import java.io.Serializable;
 import java.util.List;
-//*****CLASE WRAPPER PARA TRABAJAR LOS RECYCLER VIEWS ANIDADOS*****//
+
+/*****CLASE WRAPPER PARA TRABAJAR LOS RECYCLER VIEWS ANIDADOS*****/
 public class CtWrapper implements Serializable {
     private Category category;
     private List<Transaction> transactions;
@@ -30,16 +31,27 @@ public class CtWrapper implements Serializable {
         return category;
     }
 
+
     public void setCategory(Category category) {
         this.category = category;
     }
+
 
     public List<Transaction> getTransactions() {
         return transactions;
     }
 
+
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
 
+
+    @Override
+    public String toString() {
+        return "CtWrapper{" +
+                "category=" + category +
+                ", transactions=" + transactions +
+                '}';
+    }
 }

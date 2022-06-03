@@ -25,6 +25,7 @@ import tfg.jsemp.moneysaver.model.CtWrapper;
 import tfg.jsemp.moneysaver.model.Transaction;
 import tfg.jsemp.moneysaver.ui.MainActivity;
 import tfg.jsemp.moneysaver.utils.AppUtils;
+import tfg.jsemp.moneysaver.utils.ConstantsUtil;
 import tfg.jsemp.moneysaver.utils.FirestoreUtil;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
@@ -46,45 +47,50 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         return new CategoryViewHolder(itemView);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.CategoryViewHolder holder, int position) {
         if(mCategoriesWrapper != null) {
             CtWrapper categoryWrapper = mCategoriesWrapper.get(position);
             holder.tvCategory.setText(categoryWrapper.getCategory().getName());
-            //****NESTED RECYCLER VIEW****//
+            /**NESTED RECYCLER VIEW**/
             if (categoryWrapper.getTransactions() != null) {
                 holder.tvSaldo.setText(
-                    calculateEarning(mCategoriesWrapper.get(position).getTransactions()) + "€"
+                    calculateEarning(mCategoriesWrapper.get(position).getTransactions()) + ConstantsUtil.ConstantsSimbols.EURO
                 );
-               /* AppUtils.loadImage(holder.itemView,
-                        categoryWrapper.getCategory().getImage(),
-                        holder.ivCategory);*/
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(
-                        holder.rvTransaction.getContext(), 2);
-                LinearLayoutManager layoutManager = new LinearLayoutManager(
-                        holder.rvTransaction.getContext(),
-                        LinearLayoutManager.VERTICAL, false
-                );
-                layoutManager.setInitialPrefetchItemCount(
-                        categoryWrapper.getTransactions().size()
-                );
-
-                TransactionAdapter transactionAdapter = new TransactionAdapter(
-                        categoryWrapper.getTransactions()
-                );
-                //****ASIGNACION DEL HIJO EN EL PADRE****//
-                if(categoryWrapper.getTransactions().size() >= 10 ) {
-                    holder.rvTransaction.setLayoutManager(gridLayoutManager);
-                }
-                else {
-                    holder.rvTransaction.setLayoutManager(layoutManager);
-                }
-                holder.rvTransaction.setAdapter(transactionAdapter);
-                holder.rvTransaction.setRecycledViewPool(viewPool);
+                setNestedRecycler(holder, categoryWrapper);
             }
         }
     }
 
+
+    /**Establece las propiedades del recycler view hijo**/
+    private void setNestedRecycler(CategoryViewHolder holder, CtWrapper categoryWrapper) {
+        setLayoutManager(holder.rvTransaction, categoryWrapper.getTransactions().size());
+        holder.rvTransaction.setAdapter(new TransactionAdapter(
+                categoryWrapper.getTransactions())
+        );
+        holder.rvTransaction.setRecycledViewPool(viewPool);
+    }
+
+
+    /**Determina el aspecto del layout y lo asigna**/
+    private void setLayoutManager(RecyclerView rvTransaction, int transactionsSize) {
+        if(transactionsSize >= 10 ) {
+            rvTransaction.setLayoutManager(
+                new GridLayoutManager(rvTransaction.getContext(), 2)
+            );
+        }
+        else {
+            rvTransaction.setLayoutManager(
+                new LinearLayoutManager(rvTransaction.getContext(),
+                LinearLayoutManager.VERTICAL, false)
+            );
+        }
+    }
+
+
+    /**Calcula el saldo y le da formato en forma de cadena**/
     private String calculateEarning(List<Transaction> transactions) {
         DecimalFormat df = new DecimalFormat("0.##");
         float value = 0;
@@ -98,6 +104,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         }
         return String.valueOf(df.format(value));
     }
+
+
     /**Acceso externo al objeto que almacena categoria + lista de transacciones relacionadas*/
     public List<CtWrapper> getCategoryWrapperList() {
         List<CtWrapper> categoryList = new ArrayList<>();
@@ -107,6 +115,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         return categoryList;
     }
 
+
     private CtWrapper getItem(int position) {
         CtWrapper category = new CtWrapper();
         if(mCategoriesWrapper != null) {
@@ -114,6 +123,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         }
         return category;
     }
+
 
     @Override
     public int getItemCount() {
@@ -125,10 +135,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         }
     }
 
+
     public void setCategories(List<CtWrapper> categories) {
         mCategoriesWrapper = categories;
         notifyDataSetChanged();
     }
+
 
     public class CategoryViewHolder extends RecyclerView.ViewHolder {
        private RecyclerView rvTransaction;
@@ -136,10 +148,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         private TextView tvCategory;
         private TextView tvSaldo;
 
+
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             iniciaViews();
         }
+
 
         private void iniciaViews() {
             this.rvTransaction = itemView.findViewById(R.id.rvTransactions);
@@ -148,6 +162,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             this.tvSaldo = (TextView) itemView.findViewById(R.id.tvSaldoCategory);
         }
 
-
     }
+
 }

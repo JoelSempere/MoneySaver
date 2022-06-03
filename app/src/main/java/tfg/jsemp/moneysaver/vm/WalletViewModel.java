@@ -29,7 +29,7 @@ public class WalletViewModel extends AndroidViewModel {
     }
 
 
-    //***Recuperamos las cuentas del usuario***//
+    /**Recuperamos las cuentas del usuario**/
     public MutableLiveData<List<Account>> getAccounts() {
         return FirestoreUtil.getAccounts(firebaseAuth.getCurrentUser().getUid());
     }

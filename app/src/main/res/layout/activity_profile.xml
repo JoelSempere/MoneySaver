@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".ui.ProfileActivity">
 
+    <ImageButton
+        android:id="@+id/ibLogout"
+        android:layout_width="48dp"
+        android:layout_height="36dp"
+        android:background="#FFFFFF"
+        android:scaleType="centerInside"
+        app:circularflow_radiusInDP="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/ivProfile"
+        app:layout_constraintEnd_toEndOf="@+id/btnEdit"
+        app:layout_constraintStart_toStartOf="@+id/btnEdit"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_lock_power_off" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline11"
         android:layout_width="wrap_content"
@@ -59,8 +72,8 @@
 
     <ImageView
         android:id="@+id/ivProfile"
-        android:layout_width="147dp"
-        android:layout_height="165dp"
+        android:layout_width="135dp"
+        android:layout_height="144dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -68,7 +81,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/coin" />
+        app:srcCompat="@mipmap/mslogo" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
@@ -107,14 +120,23 @@
                 android:textAlignment="center"
                 android:textSize="14dp" />
 
-            <EditText
-                android:id="@+id/etNewUsernameC"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilNewUsernameC"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Enter new username"
-                android:inputType="textPersonName"
-                android:visibility="gone" />
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietNewUsernameC"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nuevo nombre de usuario"
+                    android:inputType="text"
+                    android:textAlignment="center"
+                    android:visibility="gone" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/tvEmail"
@@ -131,7 +153,6 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textSize="14dp" />
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -155,7 +176,7 @@
         android:text="GUARDAR"
         android:textAlignment="center"
         android:textAllCaps="true"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:backgroundTint="@color/primary"
         app:elevation="20dp"
         app:icon="@android:drawable/ic_menu_save"

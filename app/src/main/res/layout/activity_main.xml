@@ -83,7 +83,7 @@
 
             <TextView
                 android:id="@+id/tvMonth"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:letterSpacing="0.1"
@@ -93,8 +93,9 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/tvIngreso"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/ibNextDate"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/ibBackDate"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Mayo 2022" />
 
@@ -198,6 +199,32 @@
                 app:layout_constraintStart_toEndOf="@+id/tvqttyGasto"
                 app:layout_constraintTop_toBottomOf="@+id/tvSaldoDisponible"
                 tools:text="500 €" />
+
+            <ImageButton
+                android:id="@+id/ibNextDate"
+                android:layout_width="36dp"
+                android:layout_height="24dp"
+                android:background="@color/primary_dark"
+                android:scaleType="centerInside"
+                app:layout_constraintBottom_toTopOf="@+id/tvGasto"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tvMonth"
+                app:layout_constraintTop_toTopOf="@+id/tvMonth"
+                app:srcCompat="@mipmap/arrowr" />
+
+            <ImageButton
+                android:id="@+id/ibBackDate"
+                android:layout_width="36dp"
+                android:layout_height="24dp"
+                android:background="@color/primary_dark"
+                android:scaleType="centerInside"
+                app:layout_constraintBottom_toBottomOf="@+id/tvMonth"
+                app:layout_constraintEnd_toStartOf="@+id/tvMonth"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvMonth"
+                app:srcCompat="@mipmap/arrowl" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

@@ -14,15 +14,18 @@ import java.util.List;
 
 import tfg.jsemp.moneysaver.R;
 import tfg.jsemp.moneysaver.model.Transaction;
+import tfg.jsemp.moneysaver.utils.ConstantsUtil;
 
 public class TransactionAdapter extends RecyclerView.Adapter<tfg.jsemp.moneysaver.adapter.TransactionAdapter.TransactionViewHolder> {
 
     private List<Transaction> mTransactions;
 
+
     public TransactionAdapter(List<Transaction> transactions) {
         this.mTransactions = transactions;
         notifyDataSetChanged();
     }
+
 
     @NonNull
     @Override
@@ -32,21 +35,29 @@ public class TransactionAdapter extends RecyclerView.Adapter<tfg.jsemp.moneysave
         return new TransactionViewHolder(itemView);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull TransactionAdapter.TransactionViewHolder holder, int position) {
         if(mTransactions != null) {
             final Transaction transaction = mTransactions.get(position);
-            if (!transaction.isInCome()) {
-                holder.ivIsInCome.setImageResource(R.mipmap.minus);
-                holder.itemView.setBackgroundColor(Color.parseColor("#ff8080"));
-            }
-            else {
-                holder.ivIsInCome.setImageResource(R.mipmap.check);
-            }
-            holder.tvTransactionQuantity.setText(transaction.getQuantity() + " €");
+            setTransactionStyle(transaction, holder);
+            holder.tvTransactionQuantity.setText(transaction.getQuantity() + ConstantsUtil.ConstantsSimbols.EURO);
             holder.tvCont.setText(String.valueOf(position + 1));
         }
     }
+
+
+    /**Establece el estilo de la transaccion según una condición**/
+    private void setTransactionStyle(Transaction transaction, TransactionViewHolder holder) {
+        if (!transaction.isInCome()) {
+            holder.ivIsInCome.setImageResource(R.mipmap.minus);
+            holder.itemView.setBackgroundColor( holder.itemView.getContext().getResources().getColor(R.color.transaction_negative));
+        }
+        else {
+            holder.ivIsInCome.setImageResource(R.mipmap.check);
+        }
+    }
+
 
     @Override
     public int getItemCount() {
@@ -56,12 +67,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<tfg.jsemp.moneysave
         else {
             return 0;
         }
-    }
-
-
-    public void setTransactions(List<Transaction> transactions) { //No creo que lo utilice, esta definido en el constructor
-        mTransactions = transactions;
-        notifyDataSetChanged();
     }
 
 
@@ -77,6 +82,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<tfg.jsemp.moneysave
             iniciaViews();
         }
 
+
         private void iniciaViews() {
             this.tvCont = itemView.findViewById(R.id.tvCont);
             this.tvTransactionQuantity = itemView.findViewById(R.id.tvTransactionQuantity);
@@ -84,4 +90,5 @@ public class TransactionAdapter extends RecyclerView.Adapter<tfg.jsemp.moneysave
         }
 
     }
+
 }

@@ -93,7 +93,7 @@ class CreateTransaction : AppCompatActivity() {
         fabSaveTransaction.setOnClickListener {
             if(checkFields()) {
                 transaction.userId = firebaseAuth.currentUser!!.uid
-                transaction.quantity =  tietCantidad.text.toString().toFloat()
+                transaction.quantity =  tietNewUsernameC.text.toString().toFloat()
                 transaction.isInCome = swIsInCome.isChecked
                 FirestoreUtil.getIdByName(spCategory.selectedItem.toString(), "Categories").observe(this){ ctgId ->
                     transaction.categoryId = ctgId.toString()
