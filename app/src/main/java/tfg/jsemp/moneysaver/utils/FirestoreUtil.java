@@ -21,6 +21,8 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import tfg.jsemp.moneysaver.model.Account;
@@ -184,9 +186,6 @@ public class FirestoreUtil {
         return categories;
     }
 
-    //TODO pendiente, recibir el timestamp para devolver solo las transacciones que esten en el rango, rango sacado de appUtils
-
-
 
     public static MutableLiveData<List<Transaction>> getTransactionsByCategoryId(String categoryId) {
         MutableLiveData<List<Transaction>> transactions = new MutableLiveData<>();
@@ -240,12 +239,15 @@ public class FirestoreUtil {
                 .set(transaction);
     }
 
-    //TODO obtener cuando el usuario sea el actual. Hacer query
     public static MutableLiveData<List<Transaction>> getTransactions() {
         MutableLiveData<List<Transaction>> transactions = new MutableLiveData<>();
-
+        Date start = new Date();
+        Date end = new Date();
+        AppUtils.fillDate(start, end); // testeado funciona //TODO pasar como parametro si hacemos un swipe o alternativas
         Query query = db.collectionGroup("Transactions")
-                .whereEqualTo("userId", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                .whereEqualTo("userId", FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .whereGreaterThanOrEqualTo("date", start)
+                .whereLessThanOrEqualTo("date", end);
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {

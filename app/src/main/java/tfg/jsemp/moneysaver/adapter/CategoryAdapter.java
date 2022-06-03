@@ -2,12 +2,14 @@ package tfg.jsemp.moneysaver.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -57,6 +59,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                /* AppUtils.loadImage(holder.itemView,
                         categoryWrapper.getCategory().getImage(),
                         holder.ivCategory);*/
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(
+                        holder.rvTransaction.getContext(), 2);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(
                         holder.rvTransaction.getContext(),
                         LinearLayoutManager.VERTICAL, false
@@ -69,7 +73,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                         categoryWrapper.getTransactions()
                 );
                 //****ASIGNACION DEL HIJO EN EL PADRE****//
-                holder.rvTransaction.setLayoutManager(layoutManager);
+                if(categoryWrapper.getTransactions().size() >= 10 ) {
+                    holder.rvTransaction.setLayoutManager(gridLayoutManager);
+                }
+                else {
+                    holder.rvTransaction.setLayoutManager(layoutManager);
+                }
                 holder.rvTransaction.setAdapter(transactionAdapter);
                 holder.rvTransaction.setRecycledViewPool(viewPool);
             }

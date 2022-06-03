@@ -21,14 +21,10 @@ public class AppUtils {
             .into(iv);
     }
 
-
-   /* public static void fillDateRange(Timestamp currentTime, Date start, Date end) {
-        Calendar gc = new GregorianCalendar();
-        gc.set(Calendar.MONTH, month);
-        gc.set(Calendar.DAY_OF_MONTH, 1);
-        Date monthStart = gc.getTime();
-        gc.add(Calendar.MONTH, 1);
-        gc.add(Calendar.DAY_OF_MONTH, -1);
-        Date monthEnd = gc.getTime();
-    } */
+    public static void fillDate(Date start, Date end) {
+        start.setMonth(start.getMonth());
+        start.setDate(1);
+        end.setMonth(end.getMonth() + 1);
+        end.setDate(0);
+    }
 }
