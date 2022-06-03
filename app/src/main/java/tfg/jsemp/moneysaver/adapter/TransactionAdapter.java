@@ -1,6 +1,6 @@
 package tfg.jsemp.moneysaver.adapter;
 
-import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import tfg.jsemp.moneysaver.R;
-import tfg.jsemp.moneysaver.model.Account;
 import tfg.jsemp.moneysaver.model.Transaction;
 
 public class TransactionAdapter extends RecyclerView.Adapter<tfg.jsemp.moneysaver.adapter.TransactionAdapter.TransactionViewHolder> {
@@ -37,8 +36,13 @@ public class TransactionAdapter extends RecyclerView.Adapter<tfg.jsemp.moneysave
     public void onBindViewHolder(@NonNull TransactionAdapter.TransactionViewHolder holder, int position) {
         if(mTransactions != null) {
             final Transaction transaction = mTransactions.get(position);
-            System.out.println(transaction);
-            //TODO Cargar imagen si saldo es positivo o negativo ¿y color del card? : holder.ivIsInCome
+            if (!transaction.isInCome()) {
+                holder.ivIsInCome.setImageResource(R.mipmap.minus);
+                holder.itemView.setBackgroundColor(Color.parseColor("#ff8080"));
+            }
+            else {
+                holder.ivIsInCome.setImageResource(R.mipmap.check);
+            }
             holder.tvTransactionQuantity.setText(transaction.getQuantity() + " €");
             holder.tvCont.setText(String.valueOf(position + 1));
         }
@@ -77,7 +81,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<tfg.jsemp.moneysave
             this.tvCont = itemView.findViewById(R.id.tvCont);
             this.tvTransactionQuantity = itemView.findViewById(R.id.tvTransactionQuantity);
             this.ivIsInCome = itemView.findViewById(R.id.ivIsInCome);
-            //this.loquesea = itemview.find...
         }
 
     }

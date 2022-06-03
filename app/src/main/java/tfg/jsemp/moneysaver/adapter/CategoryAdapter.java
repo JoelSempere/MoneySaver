@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,8 @@ import tfg.jsemp.moneysaver.R;
 import tfg.jsemp.moneysaver.model.Category;
 import tfg.jsemp.moneysaver.model.CtWrapper;
 import tfg.jsemp.moneysaver.model.Transaction;
+import tfg.jsemp.moneysaver.ui.MainActivity;
+import tfg.jsemp.moneysaver.utils.AppUtils;
 import tfg.jsemp.moneysaver.utils.FirestoreUtil;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
@@ -44,13 +48,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public void onBindViewHolder(@NonNull CategoryAdapter.CategoryViewHolder holder, int position) {
         if(mCategoriesWrapper != null) {
             CtWrapper categoryWrapper = mCategoriesWrapper.get(position);
-            //TODO set image
             holder.tvCategory.setText(categoryWrapper.getCategory().getName());
             //****NESTED RECYCLER VIEW****//
             if (categoryWrapper.getTransactions() != null) {
                 holder.tvSaldo.setText(
                     calculateEarning(mCategoriesWrapper.get(position).getTransactions()) + "€"
                 );
+               /* AppUtils.loadImage(holder.itemView,
+                        categoryWrapper.getCategory().getImage(),
+                        holder.ivCategory);*/
                 LinearLayoutManager layoutManager = new LinearLayoutManager(
                         holder.rvTransaction.getContext(),
                         LinearLayoutManager.VERTICAL, false
@@ -83,7 +89,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         }
         return String.valueOf(df.format(value));
     }
-
+    /**Acceso externo al objeto que almacena categoria + lista de transacciones relacionadas*/
     public List<CtWrapper> getCategoryWrapperList() {
         List<CtWrapper> categoryList = new ArrayList<>();
         for (int i = 0; i < getItemCount(); i++) {

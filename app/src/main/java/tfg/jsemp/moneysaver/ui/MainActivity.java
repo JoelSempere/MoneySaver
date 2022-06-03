@@ -9,9 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.ArrayMap;
+import android.view.Menu;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.type.DateTime;
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         firebaseAuth = FirebaseAuth.getInstance();
         initViews();
+        loadDate();
         onChangeActivity();
         final CategoryAdapter categoryAdapter = new CategoryAdapter(this);
         setRecyclerView(categoryAdapter);
@@ -87,11 +91,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void loadPanel(CategoryAdapter adapter) {
+    private void loadDate() {
         Date date = Calendar.getInstance().getTime();
         DateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
         tvMonth.setText(formatter.format(date));
-        loadMoney(adapter);
     }
 
     /**Recupera el valor economico de las transacciones*/
@@ -117,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         tvQttySaldo.setText(String.valueOf(ingreso - gasto)+ " €");
     }
 
-
+    /**Establece los objectos hijo en el Wrapper del padre e inicia el recycler view principal**/
     private void setRecyclerView(CategoryAdapter adapter) {
         Map<String, List<Transaction>> transactionsByCategoryId = new ArrayMap<>();
 
@@ -133,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
                 FirestoreUtil.getCategories().observe(MainActivity.this, new Observer<List<Category>>() {
                     @Override
                     public void onChanged(List<Category> categories) {
-                        System.out.println(transactionsByCategoryId);
                         List<CtWrapper> ctWrappers = new ArrayList<>();
                         for (Category c: categories) {
                             List<Transaction> transactions = transactionsByCategoryId.get(c.getCategoryId());
@@ -142,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                         rvCategories.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         rvCategories.setAdapter(adapter);
                         adapter.setCategories(ctWrappers);
-                        loadPanel(adapter); //Carga el panel superior de la main activity
+                        loadMoney(adapter); //Carga el panel superior de la main activity
                     }
                 });
 

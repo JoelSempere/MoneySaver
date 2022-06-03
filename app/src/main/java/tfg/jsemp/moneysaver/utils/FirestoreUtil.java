@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -183,6 +184,9 @@ public class FirestoreUtil {
         return categories;
     }
 
+    //TODO pendiente, recibir el timestamp para devolver solo las transacciones que esten en el rango, rango sacado de appUtils
+
+
 
     public static MutableLiveData<List<Transaction>> getTransactionsByCategoryId(String categoryId) {
         MutableLiveData<List<Transaction>> transactions = new MutableLiveData<>();
@@ -236,15 +240,19 @@ public class FirestoreUtil {
                 .set(transaction);
     }
 
-
+    //TODO obtener cuando el usuario sea el actual. Hacer query
     public static MutableLiveData<List<Transaction>> getTransactions() {
         MutableLiveData<List<Transaction>> transactions = new MutableLiveData<>();
-        db.collectionGroup("Transactions").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+        Query query = db.collectionGroup("Transactions")
+                .whereEqualTo("userId", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 transactions.setValue(task.getResult().toObjects(Transaction.class));
             }
         });
+
         return transactions;
     }
 }

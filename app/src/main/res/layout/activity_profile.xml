@@ -6,48 +6,61 @@
     android:layout_height="match_parent"
     tools:context=".ui.ProfileActivity">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.92" />
+
     <ImageButton
         android:id="@+id/btnProfile"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="@color/primary_dark"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
+        android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnMain"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/fui_ic_anonymous_white_24dp" />
+        app:layout_constraintTop_toTopOf="@+id/btnMain"
+        app:srcCompat="@mipmap/profile" />
 
     <ImageButton
         android:id="@+id/btnWallet"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="@color/primary"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
+        android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnMain"
-        app:srcCompat="@drawable/fui_ic_anonymous_white_24dp" />
+        app:layout_constraintTop_toTopOf="@+id/guideline11"
+        app:srcCompat="@mipmap/wallet" />
 
     <ImageButton
         android:id="@+id/btnMain"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="@color/primary"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
+        android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnWallet"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnProfile"
-        app:srcCompat="@drawable/fui_ic_anonymous_white_24dp" />
+        app:layout_constraintTop_toTopOf="@+id/btnWallet"
+        app:srcCompat="@mipmap/piggy" />
 
     <ImageView
         android:id="@+id/ivProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="147dp"
+        android:layout_height="165dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -55,8 +68,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/fui_ic_check_circle_black_128dp"
-        tools:srcCompat="@drawable/fui_ic_check_circle_black_128dp" />
+        app:srcCompat="@mipmap/coin" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"

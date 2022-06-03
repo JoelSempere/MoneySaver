@@ -2,18 +2,17 @@ package tfg.jsemp.moneysaver.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_create_transaction.*
 import tfg.jsemp.moneysaver.R
 import tfg.jsemp.moneysaver.model.Account
 import tfg.jsemp.moneysaver.model.Category
 import tfg.jsemp.moneysaver.model.Transaction
-import tfg.jsemp.moneysaver.utils.ConstantsUtil
 import tfg.jsemp.moneysaver.utils.FirestoreUtil
 
 class CreateTransaction : AppCompatActivity() {
@@ -28,7 +27,25 @@ class CreateTransaction : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
         initializeSpiners()
         onSaveTransaction(transaction)
+        setSupportActionBar(mtToolbar)
 
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_transaction, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.item_close -> {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 
