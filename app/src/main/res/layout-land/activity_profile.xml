@@ -10,13 +10,13 @@
         android:contentDescription="@string/content_desc_logout"
         android:id="@+id/ibLogout"
         android:layout_width="48dp"
-        android:layout_height="36dp"
+        android:layout_height="wrap_content"
         android:background="#FFFFFF"
         android:scaleType="centerInside"
+        android:textAlignment="textEnd"
+        android:layout_marginTop="8dp"
         app:circularflow_radiusInDP="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/ivProfile"
-        app:layout_constraintEnd_toEndOf="@+id/btnEdit"
-        app:layout_constraintStart_toStartOf="@+id/btnEdit"
+        app:layout_constraintEnd_toEndOf="@+id/cardView2"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_lock_power_off" />
 
@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.92" />
+        app:layout_constraintGuide_end="61dp" />
 
     <ImageButton
         android:contentDescription="@string/content_desc_profile"
@@ -81,9 +81,8 @@
         android:layout_height="144dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/cardView2"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline5"
+        app:layout_constraintEnd_toStartOf="@+id/cardView2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/mslogo" />
@@ -99,10 +98,10 @@
         android:paddingStart="24dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline5"
+        app:layout_constraintBottom_toBottomOf="@+id/ivProfile"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivProfile">
+        app:layout_constraintStart_toEndOf="@+id/ivProfile"
+        app:layout_constraintTop_toTopOf="@+id/ivProfile">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -168,10 +167,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/ivProfile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivProfile"
-        app:layout_constraintTop_toTopOf="@+id/ivProfile"
+        app:layout_constraintBottom_toTopOf="@+id/ivProfile"
+        app:layout_constraintEnd_toEndOf="@+id/ivProfile"
         app:srcCompat="@android:drawable/ic_menu_edit" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -190,7 +187,7 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline11"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline5"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2"
         app:srcCompat="@android:drawable/ic_menu_save" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -198,6 +195,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.66" />
+        app:layout_constraintGuide_percent="0.66423357" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

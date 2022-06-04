@@ -8,9 +8,9 @@
 
     <ImageButton
         android:id="@+id/btnProfile"
+        android:contentDescription="@string/content_desc_profile"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:contentDescription="@string/content_desc_profile"
         android:background="@color/primary"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
@@ -22,8 +22,8 @@
         app:srcCompat="@mipmap/profile" />
 
     <ImageButton
-        android:contentDescription="@string/content_desc_wallet"
         android:id="@+id/btnWallet"
+        android:contentDescription="@string/content_desc_wallet"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/primary"
@@ -38,8 +38,8 @@
         app:srcCompat="@mipmap/wallet" />
 
     <ImageButton
-        android:contentDescription="@string/content_desc_main"
         android:id="@+id/btnMain"
+        android:contentDescription="@string/content_desc_main"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/primary_dark"
@@ -55,9 +55,9 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddTransaction"
+        android:contentDescription="@string/content_desc_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/content_desc_logo"
         android:layout_marginBottom="16dp"
         android:clickable="true"
         app:backgroundTint="@color/primary_dark"
@@ -87,7 +87,7 @@
 
             <TextView
                 android:id="@+id/tvMonth"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:letterSpacing="0.1"
@@ -162,7 +162,7 @@
             <TextView
                 android:id="@+id/tvqttyIngreso"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
@@ -177,7 +177,7 @@
             <TextView
                 android:id="@+id/tvqttyGasto"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
@@ -192,7 +192,7 @@
             <TextView
                 android:id="@+id/tvqttySaldo"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
@@ -207,7 +207,7 @@
             <ImageButton
                 android:id="@+id/ibNextDate"
                 android:contentDescription="@string/content_desc_next_date"
-                android:layout_width="36dp"
+                android:layout_width="wrap_content"
                 android:layout_height="24dp"
                 android:background="@color/primary_dark"
                 android:scaleType="centerInside"
@@ -221,7 +221,7 @@
             <ImageButton
                 android:id="@+id/ibBackDate"
                 android:contentDescription="@string/content_desc_previous_date"
-                android:layout_width="36dp"
+                android:layout_width="wrap_content"
                 android:layout_height="24dp"
                 android:background="@color/primary_dark"
                 android:scaleType="centerInside"
@@ -241,7 +241,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.121751025" />
+        app:layout_constraintGuide_begin="83dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCategoriesMain"
@@ -260,6 +260,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.92" />
+        app:layout_constraintGuide_percent="0.85" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

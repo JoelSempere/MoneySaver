@@ -45,11 +45,9 @@
                         android:layout_height="?attr/actionBarSize"
                         android:elevation="20dp"
                         app:menu="@menu/menu_transaction"
-                        app:title="Nueva Transacción" />
+                        app:title="@string/title_transaction" />
 
                 </com.google.android.material.appbar.AppBarLayout>
-
-                <!-- Note: A RecyclerView can also be used -->
 
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -59,7 +57,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:hint="Introducir Cantidad"
+                android:hint="@string/hint_money"
                 app:endIconDrawable="@android:drawable/ic_menu_close_clear_cancel"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +72,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Switch
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/swIsInCome"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -84,7 +82,7 @@
                 android:scaleX="1"
                 android:scaleY="1"
                 android:showText="false"
-                android:text="Ingreso"
+                android:text="@string/isInCome"
                 android:textAllCaps="true"
                 app:layout_constraintBottom_toTopOf="@+id/guideline7"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -131,7 +129,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Guardar"
+                android:text="@string/save"
                 app:icon="@android:drawable/ic_menu_save"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -154,6 +152,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/tfCantidad"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:contentDescription="@string/content_desc_logo"
                 app:layout_constraintTop_toBottomOf="@+id/coordinatorLayout"
                 app:srcCompat="@mipmap/mslogo" />
 

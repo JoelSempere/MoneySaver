@@ -7,16 +7,16 @@
     tools:context=".ui.WalletActivity">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline12"
+        android:id="@+id/guideline16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.92" />
+        app:layout_constraintGuide_end="61dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
-        android:layout_height="65dp"
+        android:layout_height="83dp"
         android:background="@color/primary_dark"
         app:layout_constraintBottom_toTopOf="@+id/rvWallets"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +52,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnMain"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnMain"
+        app:layout_constraintTop_toTopOf="@+id/guideline16"
         app:srcCompat="@mipmap/profile" />
 
     <ImageButton
@@ -68,7 +68,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnMain"
-        app:layout_constraintTop_toTopOf="@+id/guideline12"
+        app:layout_constraintTop_toTopOf="@+id/guideline16"
         app:srcCompat="@mipmap/wallet" />
 
     <ImageButton
@@ -84,14 +84,14 @@
         app:layout_constraintEnd_toStartOf="@+id/btnWallet"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnProfile"
-        app:layout_constraintTop_toTopOf="@+id/guideline12"
+        app:layout_constraintTop_toTopOf="@+id/guideline16"
         app:srcCompat="@mipmap/piggy" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvWallets"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnMain"
+        app:layout_constraintBottom_toTopOf="@+id/guideline16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"

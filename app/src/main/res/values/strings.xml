@@ -1,16 +1,46 @@
 <resources>
     <string name="app_name">Money Saver</string>
+    <string name="token">74949683138-kmh37unjkp75vfkgio3g7j13nl8v7lph.apps.googleusercontent.com</string>
+
+    <!--Content Description-->
+    <string name="content_desc_logo">logo money saver</string>
+    <string name="content_desc_profile">perfil</string>
+    <string name="content_desc_wallet">cartera</string>
+    <string name="content_desc_main">actividad principal</string>
+    <string name="content_desc_add">añadir transacción</string>
+    <string name="content_desc_next_date">Siguiente mes</string>
+    <string name="content_desc_previous_date">Anterior mes</string>
+    <string name="content_desc_logout">cerrar sesión</string>
+    <string name="content_desc_edit">editar perfil</string>
+    <string name="content_desc_transaction_type">Tipo de transacción</string>
+    <!--Titles-->
+    <string name="title_my_accounts">Mis cuentas</string>
+    <string name="title_income">Ingreso</string>
+    <string name="title_expense">Gasto</string>
+    <string name="title_balance">Saldo</string>
+    <string name="title_transaction">Nueva Transacción</string>
+    <string name="username">Nombre de usuario</string>
+    <string name="email">Correo electrónico</string>
+    <!--Messages-->
     <string name="msg_ukn_err">Error al autenticarse, por favor intentelo de nuevo</string>
     <string name="wrn_sign_in">¿Aún no estás registrado?</string>
+    <string name="msg_error_save_transaction">No es posible guardar una transacción sin cantidad asignada</string>
+    <string name="msg_err_fireauth">Error en firebaseAuth</string>
+    <!--Patterns-->
+    <string name="format_pattern_1">dd MMM yyyy</string>
+    <!--Hint-->
+    <string name="hint_money">Introducir Cantidad</string>
     <string name="hint_password">Contraseña</string>
     <string name="hint_password2">Repite la Contraseña</string>
+    <string name="hint_new_username">Nuevo nombre de usuario</string>
+    <!--Buttons-->
     <string name="sign_in">Registrarse</string>
     <string name="login">Acceder</string>
     <string name="google">Acceder con Google</string>
-    <string name="msg_error_save_transaction">No es posible guardar una transacción sin cantidad asignada</string>
-    <string name="token">74949683138-kmh37unjkp75vfkgio3g7j13nl8v7lph.apps.googleusercontent.com</string>
-    <string name="msg_err_fireauth">Error en firebaseAuth</string>
-    <string name="format_pattern_1">dd MMM yyyy</string>
+    <string name="save">Guardar</string>
+    <!--Switch-->
+    <string name="isInCome">Ingreso</string>
+
 
 
 </resources>

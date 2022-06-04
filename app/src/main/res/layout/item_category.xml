@@ -29,7 +29,9 @@
                 android:layout_width="188dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:scaleType="centerInside" />
+                android:contentDescription="@string/content_desc_logo"
+                android:scaleType="centerInside"
+                tools:ignore="ImageContrastCheck" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

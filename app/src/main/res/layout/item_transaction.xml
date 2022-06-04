@@ -21,7 +21,7 @@
             android:id="@+id/tvCont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="@+id/ivIsInCome"
             app:layout_constraintStart_toEndOf="@+id/ivIsInCome"
@@ -42,10 +42,11 @@
             tools:text="1000 €" />
 
         <ImageView
+            android:contentDescription="@string/content_desc_transaction_type"
             android:id="@+id/ivIsInCome"
             android:layout_width="18dp"
             android:layout_height="0dp"
-            android:layout_marginLeft="6dp"
+            android:layout_marginStart="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
