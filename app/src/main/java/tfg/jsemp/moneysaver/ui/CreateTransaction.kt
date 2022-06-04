@@ -68,7 +68,7 @@ class CreateTransaction : AppCompatActivity() {
             if(checkFields()) {
                 transaction.userId = firebaseAuth.currentUser!!.uid
                 transaction.quantity =  tietNewUsernameC.text.toString().toFloat()
-                transaction.isInCome = swIsInCome.isChecked
+                transaction.isInCome = swIsInCome.isEnabled
                 FirestoreUtil.getIdByName(spCategory.selectedItem.toString(), "Categories").observe(this){ ctgId ->
                     transaction.categoryId = ctgId.toString()
                     FirestoreUtil.getAccountIdByName(spWallet.selectedItem.toString(), "Accounts").observe(this){ accId ->
