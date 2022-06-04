@@ -72,7 +72,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.appcompat.widget.SwitchCompat
+            <Switch
                 android:id="@+id/swIsInCome"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
