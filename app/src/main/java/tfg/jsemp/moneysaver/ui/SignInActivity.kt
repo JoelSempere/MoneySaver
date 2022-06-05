@@ -61,13 +61,9 @@ class SignInActivity : AppCompatActivity() {
                             FirestoreUtil.getUserinfo(firebaseAuth).observe( this) {
                                 createLoginIntent()
                             }
-                        } else {
-                            Toast.makeText(this, it.result.toString(), Toast.LENGTH_LONG).show()
                         }
                     }
-                    .addOnFailureListener{
-                        Toast.makeText(this, it.cause.toString(), Toast.LENGTH_LONG).show()
-                    }
+                    .addOnFailureListener{}
                     .runCatching { getErrorSignIn() }
             }
             else {

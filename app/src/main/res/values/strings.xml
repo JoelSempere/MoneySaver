@@ -40,7 +40,7 @@
     <string name="save">Guardar</string>
     <!--Switch-->
     <string name="isInCome">Ingreso</string>
-
+    <string name="username_null_error">El nombre de usuario no puede estar vacio.</string>
 
 
 </resources>

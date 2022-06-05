@@ -3,6 +3,7 @@ package tfg.jsemp.moneysaver.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_profile.*
 import tfg.jsemp.moneysaver.R
@@ -55,12 +56,18 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun onSaveAction() {
             btnSaveChanges.setOnClickListener{
-                currentUser.name = tietNewUsernameC.text.toString()
-                FirestoreUtil.updateUserName(currentUser)
-                setUserInfo()
-                tietNewUsernameC.visibility = View.GONE
-                tilNewUsernameC.visibility = View.GONE
-                btnSaveChanges.visibility = View.INVISIBLE
+                if (tietNewUsernameC.text.toString().isNotBlank()) {
+                    currentUser.name = tietNewUsernameC.text.toString()
+                    FirestoreUtil.updateUserName(currentUser)
+                    setUserInfo()
+                    tietNewUsernameC.visibility = View.GONE
+                    tilNewUsernameC.visibility = View.GONE
+                    btnSaveChanges.visibility = View.INVISIBLE
+                }
+                else {
+                    Toast.makeText(this,getString(R.string.username_null_error), Toast.LENGTH_LONG).show()
+                }
+
             }
     }
 
