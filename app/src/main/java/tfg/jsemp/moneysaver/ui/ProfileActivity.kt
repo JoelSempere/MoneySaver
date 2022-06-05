@@ -56,10 +56,8 @@ class ProfileActivity : AppCompatActivity() {
     private fun onSaveAction() {
             btnSaveChanges.setOnClickListener{
                 currentUser.name = tietNewUsernameC.text.toString()
-                if (currentUser.name != tietNewUsernameC.text.toString()) {
-                    FirestoreUtil.updateUserName(currentUser)
-                    setUserInfo()
-                }
+                FirestoreUtil.updateUserName(currentUser)
+                setUserInfo()
                 tietNewUsernameC.visibility = View.GONE
                 tilNewUsernameC.visibility = View.GONE
                 btnSaveChanges.visibility = View.INVISIBLE

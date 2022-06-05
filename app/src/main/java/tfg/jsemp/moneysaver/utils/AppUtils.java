@@ -1,11 +1,14 @@
 package tfg.jsemp.moneysaver.utils;
 
+import android.text.Editable;
 import android.util.ArrayMap;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.ktx.Firebase;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
@@ -64,4 +67,5 @@ public class AppUtils {
         }
         return filteredTransactions;
     }
+
 }

@@ -58,19 +58,19 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 holder.tvSaldo.setText(
                     calculateEarning(mCategoriesWrapper.get(position).getTransactions())
                 );
-                setNestedRecycler(holder, categoryWrapper);
+                setNestedRecycler(holder.rvTransaction, categoryWrapper);
             }
         }
     }
 
 
     /**Establece las propiedades del recycler view hijo**/
-    private void setNestedRecycler(CategoryViewHolder holder, CtWrapper categoryWrapper) {
-        setLayoutManager(holder.rvTransaction, categoryWrapper.getTransactions().size());
-        holder.rvTransaction.setAdapter(new TransactionAdapter(
+    private void setNestedRecycler(RecyclerView rvTransaction, CtWrapper categoryWrapper) {
+        setLayoutManager(rvTransaction, categoryWrapper.getTransactions().size());
+        rvTransaction.setAdapter(new TransactionAdapter(
                 categoryWrapper.getTransactions())
         );
-        holder.rvTransaction.setRecycledViewPool(viewPool);
+        rvTransaction.setRecycledViewPool(viewPool);
     }
 
 
