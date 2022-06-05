@@ -13,6 +13,8 @@ import java.util.List;
 
 import tfg.jsemp.moneysaver.R;
 import tfg.jsemp.moneysaver.model.Account;
+import tfg.jsemp.moneysaver.utils.AppUtils;
+import tfg.jsemp.moneysaver.utils.ConstantsUtil;
 import tfg.jsemp.moneysaver.utils.FirestoreUtil;
 
 public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletViewHolder>{
@@ -48,7 +50,7 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.WalletView
         if(mAccounts != null) {
             final Account acc = mAccounts.get(position);
             holder.tvWalletName.setText(acc.getName());
-            holder.tvQuantity.setText(String.valueOf(acc.getTotal()) + " €");
+            holder.tvQuantity.setText(AppUtils.formatMoney(acc.getTotal(), ConstantsUtil.ConstantsSimbols.EURO));
         }
     }
 

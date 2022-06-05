@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.ktx.Firebase;
 
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,6 +26,11 @@ public class AppUtils {
             .load(url)
             .fitCenter()
             .into(iv);
+    }
+
+    public static String formatMoney(float value, String simbol) {
+        DecimalFormat df = new DecimalFormat("0.##");
+        return df.format(value) + simbol;
     }
 
     /**Rellena con el rango de fechas seleccionado**/

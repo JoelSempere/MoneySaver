@@ -120,9 +120,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-        tvQttyGasto.setText(gasto + ConstantsUtil.ConstantsSimbols.EURO);
-        tvQttyIngreso.setText(ingreso + ConstantsUtil.ConstantsSimbols.EURO);
-        tvQttySaldo.setText( (ingreso - gasto) + ConstantsUtil.ConstantsSimbols.EURO);
+        tvQttyGasto.setText(AppUtils.formatMoney(gasto, ConstantsUtil.ConstantsSimbols.EURO ));
+        tvQttyIngreso.setText(AppUtils.formatMoney(ingreso, ConstantsUtil.ConstantsSimbols.EURO));
+        tvQttySaldo.setText( AppUtils.formatMoney((ingreso - gasto), ConstantsUtil.ConstantsSimbols.EURO));
     }
 
 

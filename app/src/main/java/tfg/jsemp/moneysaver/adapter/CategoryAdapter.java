@@ -56,7 +56,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             /**NESTED RECYCLER VIEW**/
             if (categoryWrapper.getTransactions() != null) {
                 holder.tvSaldo.setText(
-                    calculateEarning(mCategoriesWrapper.get(position).getTransactions()) + ConstantsUtil.ConstantsSimbols.EURO
+                    calculateEarning(mCategoriesWrapper.get(position).getTransactions())
                 );
                 setNestedRecycler(holder, categoryWrapper);
             }
@@ -92,7 +92,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     /**Calcula el saldo y le da formato en forma de cadena**/
     private String calculateEarning(List<Transaction> transactions) {
-        DecimalFormat df = new DecimalFormat("0.##");
         float value = 0;
         for (Transaction t : transactions) {
             if(t.isInCome()) {
@@ -102,7 +101,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 value -= t.getQuantity();
             }
         }
-        return String.valueOf(df.format(value));
+        return AppUtils.formatMoney(value, ConstantsUtil.ConstantsSimbols.EURO);
     }
 
 
